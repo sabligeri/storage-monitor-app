@@ -13,8 +13,8 @@ public class Storage {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "user_entity_id", nullable = false)
+    private UserEntity userEntity;
 
     @Column(nullable = false)
     private String name;
