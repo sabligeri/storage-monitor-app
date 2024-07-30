@@ -18,8 +18,8 @@ public class UserEntity {
     private String password;
 
     @ElementCollection(targetClass = Role.class)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_entity_id")) // Ez létrehoz egy külön táblát a role-oknak
-    @Enumerated(EnumType.STRING) // Ez tárolja az enum értékeket mint String
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_entity_id")) // This crates a table for the roles called user_roles
+    @Enumerated(EnumType.STRING) // This store the values of the enum as Strings
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -35,5 +35,25 @@ public class UserEntity {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
