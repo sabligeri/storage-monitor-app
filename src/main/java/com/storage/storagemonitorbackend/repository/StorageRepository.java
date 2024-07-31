@@ -1,4 +1,7 @@
 package com.storage.storagemonitorbackend.repository;
 
-public interface StorageRepository {
+import com.storage.storagemonitorbackend.entity.Storage;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface StorageRepository extends JpaRepository<Storage, Long> {
 }
