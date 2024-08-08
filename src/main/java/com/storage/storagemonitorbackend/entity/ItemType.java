@@ -2,11 +2,8 @@ package com.storage.storagemonitorbackend.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
-public class Product {
-
+public class ItemType {
     @Id
     @GeneratedValue
     private Long id;
@@ -14,19 +11,16 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    private Set<ProductItem> productItems;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userEntity_id",nullable = false)
     private UserEntity userEntity;
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -37,11 +31,11 @@ public class Product {
         this.name = name;
     }
 
-    public Set<ProductItem> getProductItems() {
-        return productItems;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setProductItems(Set<ProductItem> productItems) {
-        this.productItems = productItems;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 }

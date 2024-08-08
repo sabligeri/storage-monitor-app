@@ -10,5 +10,6 @@ public enum QuantityType {
     CM,
     MM,
     PIECE,
-    SQUARE_METER
+    SQUARE_METER,
+    CUBIC_METER
 }

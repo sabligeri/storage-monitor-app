@@ -22,6 +22,9 @@ public class UserEntity {
     @Enumerated(EnumType.STRING) // This store the values of the enum as Strings
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Product> products;
+
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Storage> storages;
 
