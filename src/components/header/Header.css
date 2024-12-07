@@ -1,0 +1,84 @@
+#headbar {
+  background-color: #000000;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between; /* Balra és jobbra elhelyezés */
+  align-items: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+#nav-left ul {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start; /* Bal oldali igazítás */
+  align-items: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+#nav-right {
+  display: flex;
+  justify-content: flex-end; /* Jobb oldali igazítás */
+  margin-left: auto;
+  padding-right: 1.8rem;
+}
+
+nav ul li {
+  margin: 0;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  /*transition: color 0.3s ease, transform 0.3s ease;*/
+}
+
+nav ul li a:hover {
+  transform: scale(1.2);
+  color: #f6f202;
+  text-decoration: none;
+}
+
+nav ul li a.active {
+  transform: scale(1.2);
+  color: #f6f202;
+}
+
+#nav-left li:hover{
+  transform: scale(1.2);
+}
+
+/* Térköz a tartalom és a fixált fejléc között */
+body {
+  margin-top: 80px; /* Fejléc magassága */
+}
+
+#headbar p {
+  margin: 0;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+
+#headbar p:hover {
+  transform: scale(1.2);
+  color: #f6f202;
+}
+

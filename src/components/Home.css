@@ -1,0 +1,56 @@
+/* src/components/Home.css */
+
+#home-container {
+  /*max-width: 600px;*/
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #dbd2d2;
+  text-align: center;
+  width: 95%;
+  height: 100%;
+  position: relative;
+}
+
+
+
+#home-container h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+#home-container p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+
+#about-us-container {
+  display: flex;
+  margin: 6%;
+}
+
+#about-us-text {
+  color: black;
+  font-size: 20px;
+  margin-left: 20px;
+  margin: 4%;
+}
+
+#quote {
+  color: black;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+#about-us-image {
+  float: left;
+  width: 33rem;
+  height: 33rem;
+  border: 5px solid #942323;
+  color: black;
+}
+
