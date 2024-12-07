@@ -8,6 +8,7 @@ import com.storage.storagemonitorbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,5 +39,9 @@ public class ItemTypeService {
 
         itemTypeRepository.save(itemType);
         return true;
+    }
+
+    public List<ItemType> getAllItemTypes() {
+        return itemTypeRepository.findAll();
     }
 }

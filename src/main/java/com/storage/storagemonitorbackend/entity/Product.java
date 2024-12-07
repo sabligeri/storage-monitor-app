@@ -44,4 +44,12 @@ public class Product {
     public void setProductItems(Set<ProductItem> productItems) {
         this.productItems = productItems;
     }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
 }

@@ -1,6 +1,5 @@
 package com.storage.storagemonitorbackend.security;
 
-
 import com.storage.storagemonitorbackend.security.jwt.AuthEntryPointJwt;
 import com.storage.storagemonitorbackend.security.jwt.AuthTokenFilter;
 import com.storage.storagemonitorbackend.security.jwt.JwtUtils;
@@ -61,10 +60,10 @@ public class WebSecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
-                    auth.requestMatchers("user/**").permitAll()
-                            .requestMatchers("storage/**").hasRole("USER")
+                    auth.requestMatchers("/api/user/**").permitAll()
+                            .requestMatchers("/api/storage/**").hasRole("USER")
                             .requestMatchers("itemType/**").hasRole("USER")
-                            .requestMatchers("item/**").hasRole("USER")
+                            .requestMatchers("/item/**").hasRole("USER")
                             .anyRequest().authenticated()
 
             );
