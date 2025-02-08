@@ -1,7 +1,10 @@
 package com.storage.storagemonitorbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -12,15 +15,16 @@ public class Storage {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_entity_id", nullable = false)
+    @JsonBackReference
     private UserEntity userEntity;
 
     @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "storage", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Item> items;
+    private Set<Item> items = new HashSet<>();
 
     public UserEntity getUserEntity() {
         return userEntity;

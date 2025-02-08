@@ -47,9 +47,8 @@ public class StorageService {
     }
 
     public List<Storage> getAllStoragesByUser(Long userId) {
-        return storageRepository.findByUserEntityId(userId)
-                .map(Collections::singletonList)
-                .orElseGet(Collections::emptyList);
+        List<Storage> storages = storageRepository.findAllByUserEntityId(userId);
+        return storages.isEmpty() ? Collections.emptyList() : storages;
     }
 
     public List<Item> getAllItemsByStorage(Long storageId) {
