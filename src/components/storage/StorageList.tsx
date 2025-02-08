@@ -11,49 +11,73 @@ const StorageList = () => {
     const [storages, setStorages] = useState<Storage[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [newStorageName, setNewStorageName] = useState<string>("");
 
     const savedData = localStorage.getItem("jwt-response");
     const parsedData = savedData ? JSON.parse(savedData) : null;
     const userId = parsedData?.id;
     const jwtToken = parsedData?.jwt;
 
+    const fetchStorages = async () => {
+        if (!userId || !jwtToken) {
+            setError("User id or token not found");
+            setLoading(false);
+            return;
+        }
 
-    useEffect(() => {
-        const fetchStorages = async () => {
-            if (!userId || !jwtToken) {
-                setError("User id or token not found");
-                setLoading(false);
+        try {
+            const response = await fetch(`/api/storage/user/${userId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`,
+                }
+            })
+
+            if (response.status === 204) {
+                setStorages([]);
                 return;
             }
 
-            try {
-                const response = await fetch(`/api/storage/user/${userId}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${jwtToken}`,
-                    }
-                })
+            const data = await response.json();
+            setStorages(data);
 
-                if (response.status === 204) { // Ha nincs tartalom
-                    setStorages([]); // Üres tároló lista
-                    return;
-                }
+        } catch (error: unknown) {
+            console.error(error)
+            setError(" Error occured while fetching storages. --> " + error + " ");
+        } finally {
+            setLoading(false);
+        }
+    }
 
-                const data = await response.json();
-                setStorages(data);
+    const handleStorageCreate = async () => {
+        if (!newStorageName.trim()) {
+            return
+        }
+        try {
+            const response = await fetch(`/api/storage/`, {
+                method: "POST",
+                body: JSON.stringify({ name: newStorageName, userId: userId }),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`,
+                },
+            });
 
-            } catch (error: unknown) {
-                console.error(error)
-                setError(" Error occured while fetching storages. --> " + error + " ");
-            } finally {
-                setLoading(false);
+            if (!response.ok) {
+                throw new Error("Failed to create storage");
             }
 
+            setNewStorageName("");
+            fetchStorages();
+        } catch (error) {
+            console.error("Error creating storage:", error);
         }
+    }
 
+    useEffect(() => {
         fetchStorages();
-    }, [jwtToken, userId, storages])
+    }, [jwtToken, userId])
 
 
     if (loading) {
@@ -74,21 +98,37 @@ const StorageList = () => {
 
     return (
         <div className="storage-list-container">
-            {storages.length === 0 ? (
-                <p style={{"color":"white"}}>Nincs elérhető tároló.</p>
-            ) : (
-                storages.map((storage) => (
-                    <div key={storage.id} className="storage-card">
-                        <div className="storage-name">
-                            {storage.name}
-                        </div>
-                        <div className="storage-actions">
-                            <button className="btn update-btn">Update</button>
-                            <button className="btn delete-btn">Delete</button>
-                        </div>
+            <div id="storage-creator-container">
+                <label htmlFor="">
+                    Create Storage
+                </label>
+                <input
+                    id="create-storage-input"
+                    type="text"
+                    value={newStorageName}
+                    onChange={(e) => setNewStorageName(e.target.value)}
+                    placeholder="Enter storage name"
+                />
+
+                <button id="create-storage-button" onClick={() => handleStorageCreate()}>
+                    <i className="bi bi-plus-lg"></i> Create Storage
+                </button>
+            </div>
+            {storages.map((storage) => (
+                <div key={storage.id} className="storage-card">
+                    <div className="storage-name">
+                        {storage.name}
                     </div>
-                ))
-            )}
+                    <div className="storage-actions">
+                        <button className="btn update-btn">
+                            <i className="bi bi-folder2-open"></i> Open
+                        </button>
+                        <button className="btn delete-btn">
+                            <i className="bi bi-trash3"></i> Delete
+                        </button>
+                    </div>
+                </div>
+            ))}
         </div>
     )
 }
