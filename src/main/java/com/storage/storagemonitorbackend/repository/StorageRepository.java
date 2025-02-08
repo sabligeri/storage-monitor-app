@@ -3,8 +3,8 @@ package com.storage.storagemonitorbackend.repository;
 import com.storage.storagemonitorbackend.entity.Storage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface StorageRepository extends JpaRepository<Storage, Long> {
-    Optional<Storage> findByUserEntityId(Long user_id);
+    List<Storage> findAllByUserEntityId(Long user_id);
 }

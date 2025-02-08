@@ -1,5 +1,7 @@
 package com.storage.storagemonitorbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -26,6 +28,7 @@ public class UserEntity {
     private Set<Product> products;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Storage> storages;
 
     public Set<Role> getRoles() {

@@ -11,7 +11,7 @@ public class ItemType {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userEntity_id",nullable = false)
     private UserEntity userEntity;
 

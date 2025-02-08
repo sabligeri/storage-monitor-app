@@ -11,7 +11,7 @@ public class Item {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "storage_id", nullable = false)
     private Storage storage;
 
@@ -25,7 +25,7 @@ public class Item {
     @Column(nullable = false)
     private QuantityType quantityType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "itemType_id", nullable = false)
     private ItemType itemType;
 

@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/storage")
@@ -26,6 +25,17 @@ public class StorageController {
         return storageService.addNewStorage(newStorageDTO);
     }
 
+    @GetMapping("/message")
+    public ResponseEntity<String> getMessage() {
+        return ResponseEntity.ok("Hello World");
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Storage>> getStoragesByUser(@PathVariable Long userId) {
+        List<Storage> storages = storageService.getAllStoragesByUser(userId);
+        return ResponseEntity.ok(storages);
+    }
+
     @GetMapping("/{storageId}/items")
     public ResponseEntity<List<Item>> getItemsByStorage(@PathVariable Long storageId) {
         List<Item> itemsOfStorage = storageService.getAllItemsByStorage(storageId);
@@ -35,17 +45,6 @@ public class StorageController {
         }
 
         return ResponseEntity.ok(itemsOfStorage);
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Storage>> getStoragesByUser(@PathVariable Long userId) {
-        List<Storage> storages = storageService.getAllStoragesByUser(userId);
-
-        if (storages.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.ok(storages);
     }
 
 }
