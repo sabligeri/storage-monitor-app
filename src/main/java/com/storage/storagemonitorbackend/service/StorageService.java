@@ -13,6 +13,7 @@ import java.util.*;
 
 @Service
 public class StorageService {
+
     private final StorageRepository storageRepository;
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
@@ -39,7 +40,7 @@ public class StorageService {
         return true;
     }
 
-    public Set<Item> findItemsByStorage(Long storageId) {
+    public Set<Item> findItemsOfStorage(Long storageId) {
         Optional<Storage> optionalStorage = storageRepository.findById(storageId);
 
         return optionalStorage.map(Storage::getItems)
@@ -55,6 +56,16 @@ public class StorageService {
         return itemRepository.findByStorageId(storageId)
                 .map(Collections::singletonList)
                 .orElseGet(Collections::emptyList);
+    }
+
+    public void deleteStorage(Long userId, Long storageId) {
+        Optional<Storage> optionalStorage = storageRepository.findByUserEntityIdAndId(userId, storageId);
+        if (optionalStorage.isPresent()) {
+            Storage storage = optionalStorage.get();
+            storageRepository.delete(storage);
+        } else {
+            throw new IllegalArgumentException("There is no item with id " + storageId);
+        }
     }
 
 }

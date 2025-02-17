@@ -49,4 +49,8 @@ public class Storage {
     public void setItems(Set<Item> items) {
         this.items = items;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
