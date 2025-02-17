@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import "./StorageList.css";
+import "./StorageCreator"
+import StorageCreator from "./StorageCreator";
+import StorageCard from "./StorageCard";
+import DeleteStorageModal from "./DeleteStorageModal";
 
 interface Storage {
     id: number;
@@ -12,6 +16,7 @@ const StorageList = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [newStorageName, setNewStorageName] = useState<string>("");
+    const [storageToDelete, setStorageToDelete] = useState<null | number>(null)
 
     const savedData = localStorage.getItem("jwt-response");
     const parsedData = savedData ? JSON.parse(savedData) : null;
@@ -75,6 +80,24 @@ const StorageList = () => {
         }
     }
 
+    const handleDeleteStorage = async (storageId: number) => {
+        try {
+            const response = await fetch(`/api/storage/${userId}/${storageId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${jwtToken}`
+                }
+            })
+            if (!response.ok) {
+                throw new Error("Failed to delete storage");
+            }
+            setStorageToDelete(null);
+            fetchStorages();
+        } catch (error) {
+            console.error("Error deleting storage:", error)
+        }
+    }
+
     useEffect(() => {
         fetchStorages();
     }, [jwtToken, userId])
@@ -95,40 +118,29 @@ const StorageList = () => {
             </div>
         )
     }
+    
+    console.log("Storage IDs:", storages.map(s => s.id));
+
 
     return (
-        <div className="storage-list-container">
-            <div id="storage-creator-container">
-                <label htmlFor="">
-                    Create Storage
-                </label>
-                <input
-                    id="create-storage-input"
-                    type="text"
-                    value={newStorageName}
-                    onChange={(e) => setNewStorageName(e.target.value)}
-                    placeholder="Enter storage name"
-                />
-
-                <button id="create-storage-button" onClick={() => handleStorageCreate()}>
-                    <i className="bi bi-plus-lg"></i> Create Storage
-                </button>
-            </div>
+        <div id="storage-list-container">
+            <StorageCreator
+                newStorageName={newStorageName}
+                setNewStorageName={setNewStorageName}
+                handleStorageCreate={handleStorageCreate}
+            />
             {storages.map((storage) => (
-                <div key={storage.id} className="storage-card">
-                    <div className="storage-name">
-                        {storage.name}
-                    </div>
-                    <div className="storage-actions">
-                        <button className="btn update-btn">
-                            <i className="bi bi-folder2-open"></i> Open
-                        </button>
-                        <button className="btn delete-btn">
-                            <i className="bi bi-trash3"></i> Delete
-                        </button>
-                    </div>
-                </div>
+                <StorageCard
+                    key={storage.id}
+                    storage={storage}
+                    onDelete={setStorageToDelete}
+                />
             ))}
+            <DeleteStorageModal
+                isOpen={storageToDelete !== null}
+                onClose={() => setStorageToDelete(null)}
+                onConfirm={() => storageToDelete !== null && handleDeleteStorage(storageToDelete)}
+            />
         </div>
     )
 }
