@@ -47,4 +47,9 @@ public class StorageController {
         return ResponseEntity.ok(itemsOfStorage);
     }
 
+    @DeleteMapping("/{userId}/{storageId}")
+    public void deleteStorage(@PathVariable Long userId, @PathVariable Long storageId) {
+        storageService.deleteStorage(userId, storageId);
+    }
+
 }
