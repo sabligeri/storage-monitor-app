@@ -33,7 +33,7 @@
 
   /*------------------Storage container-------------------------*/
 
-  .storage-list-container {
+  #storage-list-container {
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
@@ -46,82 +46,7 @@
     overflow-y: scroll;
 }
 
-.storage-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc; 
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 10px; 
-    width:inherit;
-}
 
-.storage-name {
-    font-size: 18px; 
-    font-weight: bold;
-}
-
-.storage-actions {
-    display: flex;
-    gap: 10px; 
-}
-
-.btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: auto;
-}
-
-.update-btn {
-    background-color: #363434; 
-    color: rgb(40, 224, 40);
-}
-
-.delete-btn {
-    background-color: #363434; 
-    color: rgb(205, 79, 79);
-}
-
-.storage-card {
-    color: rgb(50, 47, 47);
-    border: 5px solid #452a06;
-    background-color: rgb(168, 134, 89);
-    margin: auto;
-    margin-bottom: 1vw;
-}
-
-#storage-creator-container{
-    color: rgb(216, 209, 209);
-    padding-bottom: 1vw;
-}
-
-
-#create-storage-button{
-    padding: 8px 12px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: auto;
-    font-weight: bold;
-    font-size: large;
-}
-
-#create-storage-input{
-    margin-bottom: 1vw;
-    font-size: large;
-}
-
-#storage-creator-container label {
-    font-size: large;
-    font-weight: bold;
-    color: #363434;
-}
 
 /* width */
 ::-webkit-scrollbar {
@@ -138,5 +63,3 @@
     background: rgb(0, 0, 0); 
     border-radius: 8px;
   }
-  
-  /* Handle on hover */
