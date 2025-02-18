@@ -21,7 +21,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/storage">
+              <Link to="/storagelist">
                 <i className="bi bi-building"></i> Storage
               </Link>
             </li>
