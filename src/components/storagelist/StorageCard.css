@@ -41,8 +41,15 @@
 
 .storage-card {
     color: rgb(50, 47, 47);
-    border: 5px solid #452a06;
-    background-color: rgb(168, 134, 89);
+    border: 5px solid #b30116;
+    background-color: rgb(150 133 113);
     margin: auto;
     margin-bottom: 1vw;
+    font-weight: bold;
+}
+
+#storage-link {
+    background-color: #363434; 
+    color: rgb(40, 224, 40);
+    text-decoration: none;
 }

@@ -38,12 +38,12 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #dbd2d2;
+    background-color: #c4b3a9;
     text-align: center;
     width: 95%;
-    height:95vw;
+    max-height:100vh;
+    overflow-y:scroll;
     position: relative;
-    overflow-y: scroll;
 }
 
 
@@ -51,6 +51,7 @@
 /* width */
 ::-webkit-scrollbar {
     width: 20px;
+    background-color: black;
   }
   
   /* Track */
@@ -60,6 +61,5 @@
    
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: rgb(0, 0, 0); 
-    border-radius: 8px;
+    background: rgb(86, 84, 84); 
   }

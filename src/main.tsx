@@ -9,7 +9,8 @@ import Register from './components/auth/Register';
 import Home from './components/Home';
 import App from './App'; // Az App komponens tartalmazza a beágyazott útvonalakat
 import PrivateRoute from './components/PrivateRoute'; // PrivateRoute komponens
-import StorageList from './components/storage/StorageList';
+import StorageList from './components/storagelist/StorageList';
+import Storage from './components/storage/Storage';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'storage',
+        path: 'storagelist',
         element: <StorageList />,
+      },
+      {
+        path: 'storage/:storageId',
+        element: <Storage />
       }
     ],
   },

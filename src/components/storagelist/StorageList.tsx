@@ -118,9 +118,6 @@ const StorageList = () => {
             </div>
         )
     }
-    
-    console.log("Storage IDs:", storages.map(s => s.id));
-
 
     return (
         <div id="storage-list-container">
