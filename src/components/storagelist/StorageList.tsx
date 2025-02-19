@@ -100,7 +100,7 @@ const StorageList = () => {
 
     useEffect(() => {
         fetchStorages();
-    }, [jwtToken, userId])
+    }, [userId, jwtToken])
 
 
     if (loading) {
@@ -126,6 +126,7 @@ const StorageList = () => {
                 setNewStorageName={setNewStorageName}
                 handleStorageCreate={handleStorageCreate}
             />
+            <div id="storage-card-container">
             {storages.map((storage) => (
                 <StorageCard
                     key={storage.id}
@@ -133,6 +134,7 @@ const StorageList = () => {
                     onDelete={setStorageToDelete}
                 />
             ))}
+            </div>
             <DeleteStorageModal
                 isOpen={storageToDelete !== null}
                 onClose={() => setStorageToDelete(null)}
