@@ -1,5 +1,3 @@
-// src/main.tsx
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -7,8 +5,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Home from './components/Home';
-import App from './App'; // Az App komponens tartalmazza a beágyazott útvonalakat
-import PrivateRoute from './components/PrivateRoute'; // PrivateRoute komponens
+import App from './App'; 
+import PrivateRoute from './components/PrivateRoute'; 
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
 

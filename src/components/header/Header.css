@@ -7,7 +7,7 @@
   top: 0;
   z-index: 1000;
   display: flex;
-  justify-content: space-between; /* Balra és jobbra elhelyezés */
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -21,7 +21,7 @@ nav {
 #nav-left ul {
   list-style: none;
   display: flex;
-  justify-content: flex-start; /* Bal oldali igazítás */
+  justify-content: flex-start; 
   align-items: center;
   gap: 2rem;
   margin: 0;
@@ -30,7 +30,7 @@ nav {
 
 #nav-right {
   display: flex;
-  justify-content: flex-end; /* Jobb oldali igazítás */
+  justify-content: flex-end; 
   margin-left: auto;
   padding-right: 1.8rem;
 }
@@ -44,7 +44,6 @@ nav ul li a {
   text-decoration: none;
   font-weight: bold;
   font-size: 1.2rem;
-  /*transition: color 0.3s ease, transform 0.3s ease;*/
 }
 
 nav ul li a:hover {
@@ -62,9 +61,8 @@ nav ul li a.active {
   transform: scale(1.2);
 }
 
-/* Térköz a tartalom és a fixált fejléc között */
 body {
-  margin-top: 80px; /* Fejléc magassága */
+  margin-top: 80px; 
 }
 
 #headbar p {

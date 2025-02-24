@@ -6,9 +6,16 @@
     background-color: #c4b3a9;
     text-align: center;
     width: 95%;
-    height: calc(83vh);
+    height: calc(93vh);
     overflow-y: scroll;
     position: relative;
+}
+
+#item-creator-container{
+    display: inline-block;
+    padding: calc(2.35rem);
+    background-color: #363434;
+    border-radius: 8px;
 }
 
 .item-grid {
@@ -17,8 +24,9 @@
     gap: 1.5rem;
     padding: calc(1.5rem);
     justify-content: center;
-    background-color: #363434;
+    background-color: #c4b3a9;
     border-radius: 8px;
+    align-items: start;
 }
 
 .item-card {
