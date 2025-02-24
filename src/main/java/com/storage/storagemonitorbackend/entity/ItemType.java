@@ -1,5 +1,6 @@
 package com.storage.storagemonitorbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,11 +9,12 @@ public class ItemType {
     @GeneratedValue
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "userEntity_id",nullable = false)
+    @JoinColumn(name = "user_entity_id",nullable = false)
+    @JsonBackReference
     private UserEntity userEntity;
 
     public void setId(Long id) {

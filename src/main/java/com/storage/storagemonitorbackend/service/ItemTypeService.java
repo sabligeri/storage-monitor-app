@@ -8,6 +8,7 @@ import com.storage.storagemonitorbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,8 @@ public class ItemTypeService {
         return true;
     }
 
-    public List<ItemType> getAllItemTypes() {
-        return itemTypeRepository.findAll();
+    public List<ItemType> getAllItemTypesByUserId(Long userId) {
+        List<ItemType> itemTypes = itemTypeRepository.findAllByUserEntityId(userId);
+        return itemTypes.isEmpty() ? Collections.emptyList() : itemTypes;
     }
 }

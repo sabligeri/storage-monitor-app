@@ -40,12 +40,6 @@ public class StorageService {
         return true;
     }
 
-    public Set<Item> findItemsOfStorage(Long storageId) {
-        Optional<Storage> optionalStorage = storageRepository.findById(storageId);
-
-        return optionalStorage.map(Storage::getItems)
-                .orElseGet(Collections::emptySet);
-    }
 
     public List<Storage> getAllStoragesByUser(Long userId) {
         List<Storage> storages = storageRepository.findAllByUserEntityId(userId);
@@ -53,9 +47,8 @@ public class StorageService {
     }
 
     public List<Item> getAllItemsByStorage(Long storageId) {
-        return itemRepository.findByStorageId(storageId)
-                .map(Collections::singletonList)
-                .orElseGet(Collections::emptyList);
+        List<Item> items = itemRepository.findByStorageId(storageId);
+        return items.isEmpty() ? Collections.emptyList() : items;
     }
 
     public void deleteStorage(Long userId, Long storageId) {

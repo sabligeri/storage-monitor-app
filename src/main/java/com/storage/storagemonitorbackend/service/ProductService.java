@@ -25,17 +25,14 @@ public class ProductService {
     private ItemRepository itemRepository;
 
     public boolean addProduct(NewProductDTO newProductDTO) {
-        // Ellenőrizzük, hogy létezik-e a felhasználó
         UserEntity userEntity = userRepository.findById(newProductDTO.userId())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + newProductDTO.userId()));
 
-        // Létrehozunk egy új terméket
         Product product = new Product();
         product.setName(newProductDTO.name());
         product.setUserEntity(userEntity);
         product.setProductItems(new HashSet<>());
 
-        // Iterálunk a termék elemeken
         for (NewProductItemDTO itemDTO : newProductDTO.items()) {
             Item item = itemRepository.findById(itemDTO.itemId())
                     .orElseThrow(() -> new RuntimeException("Item not found with id: " + itemDTO.itemId()));
@@ -43,10 +40,10 @@ public class ProductService {
             productItem.setProduct(product);
             productItem.setItem(item);
             productItem.setQuantity(itemDTO.quantity());
-            product.getProductItems().add(productItem); // Termékhez adjuk a termék elemeket
+            product.getProductItems().add(productItem);
         }
 
-        productRepository.save(product); // Mentjük a terméket az adatbázisba
+        productRepository.save(product);
         return true;
     }
 }

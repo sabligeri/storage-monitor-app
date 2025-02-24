@@ -17,10 +17,6 @@ public class ProductItem {
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
 
-    @ManyToOne
-    @JoinColumn(name = "itemType_id", nullable = false)
-    private ItemType itemType;
-
     @Column(nullable = false)
     private double quantity;
 
@@ -42,14 +38,6 @@ public class ProductItem {
 
     public void setItem(Item item) {
         this.item = item;
-    }
-
-    public ItemType getItemType() {
-        return itemType;
-    }
-
-    public void setItemType(ItemType itemType) {
-        this.itemType = itemType;
     }
 
     public double getQuantity() {
