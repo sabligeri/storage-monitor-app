@@ -5,7 +5,6 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 export default function Header() {
   const navigate = useNavigate();
   const handleLogout = () => {
-    // Töröljük a localStorage-ból az adatokat és navigálunk a bejelentkezés oldalra
     localStorage.removeItem('jwt-response');
     navigate('/login');
   };

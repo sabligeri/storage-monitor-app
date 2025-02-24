@@ -34,9 +34,19 @@
     color: rgb(40, 224, 40);
 }
 
+.update-btn:hover{
+    background-color: rgb(41, 132, 41); 
+    color: #363434;
+}
+
 .delete-btn {
     background-color: #363434; 
     color: rgb(205, 79, 79);
+}
+
+.delete-btn:hover {
+    background-color: rgb(205, 79, 79); 
+    color: #363434;
 }
 
 .storage-card {

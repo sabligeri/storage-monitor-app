@@ -1,7 +1,6 @@
-import './Home.css';  // Stílus importálása
+import './Home.css';  
 
 const Home = () => {
-  // Lekérjük a mentett JWT response-t a localStorage-ból
   const savedData = localStorage.getItem('jwt-response');
   const parsedData = savedData ? JSON.parse(savedData) : null;
 
