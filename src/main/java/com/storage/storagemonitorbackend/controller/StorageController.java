@@ -25,11 +25,6 @@ public class StorageController {
         return storageService.addNewStorage(newStorageDTO);
     }
 
-    @GetMapping("/message")
-    public ResponseEntity<String> getMessage() {
-        return ResponseEntity.ok("Hello World");
-    }
-
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Storage>> getStoragesByUser(@PathVariable Long userId) {
         List<Storage> storages = storageService.getAllStoragesByUser(userId);
@@ -39,11 +34,6 @@ public class StorageController {
     @GetMapping("/{storageId}/items")
     public ResponseEntity<List<Item>> getItemsByStorage(@PathVariable Long storageId) {
         List<Item> itemsOfStorage = storageService.getAllItemsByStorage(storageId);
-
-        if (itemsOfStorage.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-
         return ResponseEntity.ok(itemsOfStorage);
     }
 

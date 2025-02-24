@@ -61,11 +61,11 @@ public class WebSecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth ->
                     auth.requestMatchers("/api/user/**").permitAll()
+                            .requestMatchers("/api/quantity-types/**").permitAll()
                             .requestMatchers("/api/storage/**").hasRole("USER")
-                            .requestMatchers("/itemType/**").hasRole("USER")
-                            .requestMatchers("/item/**").hasRole("USER")
+                            .requestMatchers("/api/itemType/**").hasRole("USER")
+                            .requestMatchers("/api/item/**").hasRole("USER")
                             .anyRequest().authenticated()
-
             );
 
     http.authenticationProvider(authenticationProvider());
@@ -73,5 +73,4 @@ public class WebSecurityConfig {
 
     return http.build();
   }
-  // filterchain modifications needed after controller classes and apis are created
 }

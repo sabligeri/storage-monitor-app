@@ -20,8 +20,8 @@ public class UserEntity {
     private String password;
 
     @ElementCollection(targetClass = Role.class)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_entity_id")) // This crates a table for the roles called user_roles
-    @Enumerated(EnumType.STRING) // This store the values of the enum as Strings
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_entity_id"))
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -30,6 +30,11 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private Set<Storage> storages;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<ItemType> itemTypes;
+
 
     public Set<Role> getRoles() {
         return roles;
@@ -61,5 +66,13 @@ public class UserEntity {
 
     public Long getId() {
         return id;
+    }
+
+    public Set<ItemType> getItemTypes() {
+        return itemTypes;
+    }
+
+    public void setItemTypes(Set<ItemType> itemTypes) {
+        this.itemTypes = itemTypes;
     }
 }

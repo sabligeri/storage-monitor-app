@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class ItemService {
+
     @Autowired
     private final ItemRepository itemRepository;
     @Autowired

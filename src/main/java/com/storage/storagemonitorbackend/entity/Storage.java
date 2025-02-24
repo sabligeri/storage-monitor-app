@@ -24,6 +24,7 @@ public class Storage {
     private String name;
 
     @OneToMany(mappedBy = "storage", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private Set<Item> items = new HashSet<>();
 
     public UserEntity getUserEntity() {

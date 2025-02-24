@@ -1,5 +1,6 @@
 package com.storage.storagemonitorbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -13,6 +14,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "storage_id", nullable = false)
+    @JsonBackReference
     private Storage storage;
 
     @Column(nullable = false)

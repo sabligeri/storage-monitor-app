@@ -18,7 +18,7 @@ public class Product {
     private Set<ProductItem> productItems;
 
     @ManyToOne
-    @JoinColumn(name = "userEntity_id",nullable = false)
+    @JoinColumn(name = "user_entity_id",nullable = false)
     private UserEntity userEntity;
 
     public Long getId() {
