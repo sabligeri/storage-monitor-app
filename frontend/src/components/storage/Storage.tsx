@@ -5,7 +5,6 @@ import {
     AppBar,
     Toolbar,
     IconButton,
-    Typography,
     Drawer,
     List,
     ListItem,
@@ -17,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ItemCreatorModal from "./ItemCreatorModal";
 import AddIcon from '@mui/icons-material/Add';
 import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
+import ItemCard from "./ItemCard";
 
 interface Item {
     id: number;
@@ -237,7 +237,7 @@ const Storage = () => {
 
     return (
         <div id="item-container">
-            <AppBar position="static" sx={{ width: "fit-content", backgroundColor: "black", borderRadius: "5px" }}>
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "black", borderRadius: "5px"}}>
                 <Toolbar>
                     <IconButton
                         sx={{ color: "white" }}
@@ -255,7 +255,7 @@ const Storage = () => {
                 onClose={() => setDrawerOpen(false)}
                 sx={{
                     "& .MuiDrawer-paper":
-                        { width: "40vh", borderTop: "5px solid black", }
+                        { width: "60vh", borderTop: "5px solid black", }
                 }}>
                 <List>
                     <ListItem >
@@ -264,7 +264,7 @@ const Storage = () => {
                             <AddIcon />
                         </ListItemButton>
                     </ListItem>
-                    <Divider variant="middle" sx={{borderBottomWidth: 2}}/>
+                    <Divider variant="middle" sx={{ borderBottomWidth: 2 }} />
                     <ListItem>
                         <ListItemButton onClick={() => { setOpenCreateItemType(true); setDrawerOpen(false); }}>
                             <ListItemText primary="Create Item Type" />
@@ -301,13 +301,12 @@ const Storage = () => {
             />
             <div className="item-grid">
                 {items.map((item) => (
-                    <div className="item-card" key={item.id}>
-                        <h4 className="item-name">{item.name} </h4>
-                        <h5>{item.quantityType}: {item.quantity}</h5>
-                        <h5>type: {item.itemType.name}</h5>
-                        <button className="btn refill-btn">Refill</button>
-                        <button className="btn delete-btn">Delete</button>
-                    </div>
+                    <ItemCard
+                        key={item.id}
+                        item={item}
+                        onRefill={(item) => console.log("Refill", item)}
+                        onDelete={(item) => console.log("Delete", item)}
+                    />
                 ))}
             </div>
         </div >

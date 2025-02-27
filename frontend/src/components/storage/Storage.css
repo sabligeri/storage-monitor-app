@@ -5,26 +5,19 @@
     background-color: #c4b3a9;
     text-align: center;
     width: 95%;
-    height: calc(93vh);
+    height: calc(89vh);
     overflow-y: scroll;
     position: relative;
 }
 
-#item-creator-container{
-    display: inline-block;
-    padding: calc(2.35rem);
-    background-color: #363434;
-    border-radius: 8px;
-}
 
 .item-grid {
-    display: grid;
+    display: inline-grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 4.5rem;
     padding: calc(2.5rem);
     justify-content: center;
-    background-color: #c4b3a9;
-    border-radius: 8px;
+    background-color: inherit;
 }
 
 .item-card {
