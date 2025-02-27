@@ -16,6 +16,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ItemCreatorModal from "./ItemCreatorModal";
 import AddIcon from '@mui/icons-material/Add';
+import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
 
 interface Item {
     id: number;
@@ -37,6 +38,7 @@ const Storage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [itemTypes, setItemTypes] = useState<ItemType[]>([]);
     const [quantityTypes, setQuantityTypes] = useState<string[]>([])
+    const [newItemTypeName, setNewItemTypeName] = useState<string>("");
 
     const [newItemName, setNewItemName] = useState<string>("");
     const [newItemTypeId, setNewItemTypeId] = useState<number>(0);
@@ -44,6 +46,7 @@ const Storage = () => {
     const [newItemQuantity, setNewItemQuantity] = useState<number>(0);
 
     const [openCreateItem, setOpenCreateItem] = useState(false);
+    const [openCreateItemType, setOpenCreateItemType] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
     const savedData = localStorage.getItem("jwt-response");
@@ -178,6 +181,37 @@ const Storage = () => {
         }
     }
 
+    const handleCreateItemType = async () => {
+        if (!newItemTypeName.trim()) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/itemType/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`,
+                },
+                body: JSON.stringify({
+                    name: newItemTypeName,
+                    userId: userId
+                }),
+            })
+
+            if (!response.ok) {
+                setError("Failed to create item type");
+                throw new Error("Failed to create item type");
+            }
+
+            setNewItemTypeName("");
+            fetchItemTypes();
+            setOpenCreateItemType(false);
+        } catch (error) {
+            setError("Error occured while creating Item Type: \n" + error);
+        }
+    }
+
     useEffect(() => {
         fetchItems();
         fetchItemTypes();
@@ -215,8 +249,14 @@ const Storage = () => {
                 </Toolbar>
             </AppBar>
 
-            {/* Drawer (Slide-in Menu) */}
-            <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                sx={{
+                    "& .MuiDrawer-paper":
+                        { width: "40vh", borderTop: "5px solid black", }
+                }}>
                 <List>
                     <ListItem >
                         <ListItemButton onClick={() => { setOpenCreateItem(true); setDrawerOpen(false); }}>
@@ -224,7 +264,13 @@ const Storage = () => {
                             <AddIcon />
                         </ListItemButton>
                     </ListItem>
-                    <Divider sx={{ borderRightWidth: "5px", borderTopWidth: "5px", backgroundColor: "black" }} />
+                    <Divider variant="middle" sx={{borderBottomWidth: 2}}/>
+                    <ListItem>
+                        <ListItemButton onClick={() => { setOpenCreateItemType(true); setDrawerOpen(false); }}>
+                            <ListItemText primary="Create Item Type" />
+                            <AddIcon />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
 
@@ -243,6 +289,16 @@ const Storage = () => {
                 quantityTypes={quantityTypes}
                 handleCreateItem={handleCreateItem}
             />
+
+            <ItemTypeCreatorModal
+                {...{
+                    open: openCreateItemType,
+                    handleClose: () => setOpenCreateItemType(false),
+                    newItemTypeName,
+                    setNewItemTypeName,
+                    handleCreateItemType
+                }}
+            />
             <div className="item-grid">
                 {items.map((item) => (
                     <div className="item-card" key={item.id}>
@@ -254,7 +310,7 @@ const Storage = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
     )
 }
 
