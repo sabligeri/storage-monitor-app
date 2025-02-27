@@ -1,6 +1,5 @@
 #item-container {
     margin: 0 auto;
-    padding: 1.25rem;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #c4b3a9;
@@ -22,11 +21,10 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
-    padding: calc(1.5rem);
+    padding: calc(2.5rem);
     justify-content: center;
     background-color: #c4b3a9;
     border-radius: 8px;
-    align-items: start;
 }
 
 .item-card {
