@@ -1,6 +1,22 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./Storage.css"
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Divider,
+} from "@mui/material";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ItemCreatorModal from "./ItemCreatorModal";
+import AddIcon from '@mui/icons-material/Add';
+import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
+import ItemCard from "./ItemCard";
 
 interface Item {
     id: number;
@@ -22,11 +38,16 @@ const Storage = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [itemTypes, setItemTypes] = useState<ItemType[]>([]);
     const [quantityTypes, setQuantityTypes] = useState<string[]>([])
+    const [newItemTypeName, setNewItemTypeName] = useState<string>("");
 
     const [newItemName, setNewItemName] = useState<string>("");
     const [newItemTypeId, setNewItemTypeId] = useState<number>(0);
     const [newItemQuantityType, setNewItemQuantityType] = useState<string>("");
     const [newItemQuantity, setNewItemQuantity] = useState<number>(0);
+
+    const [openCreateItem, setOpenCreateItem] = useState(false);
+    const [openCreateItemType, setOpenCreateItemType] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(false);
 
     const savedData = localStorage.getItem("jwt-response");
     const parsedData = savedData ? JSON.parse(savedData) : null;
@@ -124,11 +145,11 @@ const Storage = () => {
     }
 
     const handleCreateItem = async () => {
-        if(!newItemName.trim() || newItemTypeId <= 0 || !newItemQuantityType.trim() || newItemQuantity < 0) {
+        if (!newItemName.trim() || newItemTypeId <= 0 || !newItemQuantityType.trim() || newItemQuantity < 0) {
             return;
         }
 
-        try{
+        try {
             const response = await fetch(`/api/item/`, {
                 method: "POST",
                 headers: {
@@ -140,10 +161,11 @@ const Storage = () => {
                     quantity: newItemQuantity,
                     quantityType: newItemQuantityType,
                     storageId: storageId,
-                    itemTypeId: newItemTypeId}),
+                    itemTypeId: newItemTypeId
+                }),
             })
 
-            if(!response.ok) {
+            if (!response.ok) {
                 setError("Failed to create item");
                 throw new Error("Failed to create item");
             }
@@ -153,8 +175,40 @@ const Storage = () => {
             setNewItemQuantityType("");
             setNewItemQuantity(0);
             fetchItems();
-        } catch(error) {
+            setOpenCreateItem(false);
+        } catch (error) {
             setError("Error occured while creating Item: \n" + error);
+        }
+    }
+
+    const handleCreateItemType = async () => {
+        if (!newItemTypeName.trim()) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/itemType/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`,
+                },
+                body: JSON.stringify({
+                    name: newItemTypeName,
+                    userId: userId
+                }),
+            })
+
+            if (!response.ok) {
+                setError("Failed to create item type");
+                throw new Error("Failed to create item type");
+            }
+
+            setNewItemTypeName("");
+            fetchItemTypes();
+            setOpenCreateItemType(false);
+        } catch (error) {
+            setError("Error occured while creating Item Type: \n" + error);
         }
     }
 
@@ -183,60 +237,80 @@ const Storage = () => {
 
     return (
         <div id="item-container">
-            <div id="item-creator-container">
-                <label htmlFor="create-item-input">
-                    Create Item
-                </label>
-                <input
-                    id="create-item-input"
-                    type="text"
-                    value={newItemName}
-                    onChange={(e) => setNewItemName(e.target.value)}
-                    placeholder="Enter item's name..."
-                />
-                <select
-                    name="quantity-type-selector"
-                    id="quantity-type-selector"
-                    value={newItemQuantityType}
-                    onChange={(e) => setNewItemQuantityType(e.target.value)}
-                >
-                    <option>Select Quantity Type</option>
-                    {quantityTypes.map((quantityType) => (
-                        <option value={quantityType}>{quantityType}</option>
-                    ))}
-                </select>
-                <input
-                    type="number"
-                    id="quantity-input"
-                    value={newItemQuantity}
-                    onChange={(e) => setNewItemQuantity(Number(e.target.value))}
-                    placeholder="Enter quantity"
-                />
-                <select
-                    name="item-type-selector"
-                    id="item-type-selector"
-                    value={newItemTypeId}
-                    onChange={(e) => setNewItemTypeId(Number(e.target.value))}
-                >
-                    <option>Select type</option>
-                    {itemTypes.map((itemType) => (
-                        <option value={itemType.id}>{itemType.name}</option>
-                    ))}
-                </select>
-                <button className="btn create-item-btn" onClick={() => handleCreateItem()}> Create</button>
-            </div>
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "inherit", borderRadius: "5px"}}>
+                <Toolbar>
+                    <IconButton
+                        sx={{ color: "black", fontWeight: "medium" }}
+                        color="inherit"
+                        onClick={() => setDrawerOpen(true)}
+                    >
+                        Options
+                        <ArrowRightIcon/>
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+
+            <Drawer
+                anchor="left"
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                sx={{
+                    "& .MuiDrawer-paper":
+                        { width: "60vh", borderTop: "5px solid black", }
+                }}>
+                <List>
+                    <ListItem >
+                        <ListItemButton onClick={() => { setOpenCreateItem(true); setDrawerOpen(false); }}>
+                            <ListItemText sx={{ fontWeight: "bold" }} primary="Create Item" />
+                            <AddIcon />
+                        </ListItemButton>
+                    </ListItem>
+                    <Divider variant="middle" sx={{ borderBottomWidth: 2 }} />
+                    <ListItem>
+                        <ListItemButton onClick={() => { setOpenCreateItemType(true); setDrawerOpen(false); }}>
+                            <ListItemText primary="Create Item Type" />
+                            <AddIcon />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Drawer>
+
+            <ItemCreatorModal
+                open={openCreateItem}
+                handleClose={() => setOpenCreateItem(false)}
+                newItemName={newItemName}
+                setNewItemName={setNewItemName}
+                newItemTypeId={newItemTypeId}
+                setNewItemTypeId={setNewItemTypeId}
+                newItemQuantityType={newItemQuantityType}
+                setNewItemQuantityType={setNewItemQuantityType}
+                newItemQuantity={newItemQuantity}
+                setNewItemQuantity={setNewItemQuantity}
+                itemTypes={itemTypes}
+                quantityTypes={quantityTypes}
+                handleCreateItem={handleCreateItem}
+            />
+
+            <ItemTypeCreatorModal
+                {...{
+                    open: openCreateItemType,
+                    handleClose: () => setOpenCreateItemType(false),
+                    newItemTypeName,
+                    setNewItemTypeName,
+                    handleCreateItemType
+                }}
+            />
             <div className="item-grid">
                 {items.map((item) => (
-                    <div className="item-card" key={item.id}>
-                        <h4 className="item-name">{item.name} </h4>
-                        <h5>{item.quantityType}: {item.quantity}</h5>
-                        <h5>type: {item.itemType.name}</h5>
-                        <button className="btn refill-btn">Refill</button>
-                        <button className="btn delete-btn">Delete</button>
-                    </div>
+                    <ItemCard
+                        key={item.id}
+                        item={item}
+                        onRefill={(item) => console.log("Refill", item)}
+                        onDelete={(item) => console.log("Delete", item)}
+                    />
                 ))}
             </div>
-        </div>
+        </div >
     )
 }
 
