@@ -4,6 +4,7 @@ This is a **full-stack storage monitoring system** that allows users to **manage
 
 ✅ Built with **Spring Boot (backend)** and **React + TypeScript (frontend)**.  
 ✅ Uses **PostgreSQL** for data storage and **JWT authentication** for security.  
+✅ UI powered by **Material UI** for a modern look and feel.  
 
 ## 📌 Features
 - ✅ **User authentication** (Register & Login with JWT)
@@ -19,7 +20,7 @@ This is a **full-stack storage monitoring system** that allows users to **manage
 ## 🏗 Tech Stack
 | **Layer**  | **Technology** |
 |------------|--------------|
-| **Frontend** | React, TypeScript, Vite |
+| **Frontend** | React, TypeScript, Vite, Material UI |
 | **Backend** | Spring Boot, Java 17, Maven |
 | **Database** | PostgreSQL |
 | **Security** | Spring Security, JWT |
