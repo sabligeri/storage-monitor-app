@@ -2,8 +2,8 @@
     margin: 0 auto;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: #c4b3a9;
-    text-align: center;
+    background: radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
+        linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%);
     width: 95%;
     height: calc(89vh);
     overflow-y: scroll;
@@ -20,50 +20,7 @@
     background-color: inherit;
 }
 
-.item-card {
-    width: calc(100% - 2.35rem);
-    min-height: calc(6rem);
-    padding: 1rem;
-    border-radius: 0.625rem;
-    text-align: left;
-    word-wrap: break-word;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: rgb(50, 47, 47);
-    border: 5px solid #b30116;
-    background-color: rgb(150 133 113);
-    margin: 0 auto;
-}
-
-.item-name {
-    white-space: normal;
-    overflow-wrap: break-word;
-    max-width: 100%;
-    font-weight: bold;
-}
 
 ::-webkit-scrollbar {
     display: none;
-}
-
-.btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: auto;
-    margin: calc(0.3rem);
-    margin-bottom: calc(0.5rem);
-}
-
-.refill-btn {
-    background-color: #363434;
-    color: rgb(40, 224, 40);
-}
-
-.delete-btn {
-    background-color: #363434; 
-    color: rgb(224, 40, 40);
 }

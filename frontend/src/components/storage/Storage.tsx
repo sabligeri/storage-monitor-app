@@ -12,7 +12,7 @@ import {
     ListItemText,
     Divider,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ItemCreatorModal from "./ItemCreatorModal";
 import AddIcon from '@mui/icons-material/Add';
 import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
@@ -237,14 +237,15 @@ const Storage = () => {
 
     return (
         <div id="item-container">
-            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "black", borderRadius: "5px"}}>
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "inherit", borderRadius: "5px"}}>
                 <Toolbar>
                     <IconButton
-                        sx={{ color: "white" }}
+                        sx={{ color: "black", fontWeight: "medium" }}
                         color="inherit"
                         onClick={() => setDrawerOpen(true)}
                     >
-                        <MenuIcon />
+                        Options
+                        <ArrowRightIcon/>
                     </IconButton>
                 </Toolbar>
             </AppBar>

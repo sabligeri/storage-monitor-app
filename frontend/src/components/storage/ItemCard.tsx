@@ -37,10 +37,10 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onRefill, onDelete }) => {
     };
 
     return (
-        <Card sx={{ maxWidth: 300, backgroundColor: "#f5f5f5", p: 1 }}>
+        <Card sx={{ maxWidth: 300, backgroundColor: "#f5f5f5", p: 1, minWidth: 300, m: 1 }}>
             <CardHeader
                 sx={{
-                    minHeight: 60, // Keeps all headers aligned
+                    minHeight: 60, 
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
@@ -48,6 +48,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onRefill, onDelete }) => {
                 title={
                     <Box
                         sx={{
+                            fontWeight: "bold",
                             textAlign: "left",
                             overflow: "auto",
                             whiteSpace: "break-word",
