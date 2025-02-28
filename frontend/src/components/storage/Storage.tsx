@@ -237,7 +237,7 @@ const Storage = () => {
 
     return (
         <div id="item-container">
-            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "inherit", borderRadius: "5px"}}>
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "rgba(255, 236, 139)", borderRadius: "5px"}}>
                 <Toolbar>
                     <IconButton
                         sx={{ color: "black", fontWeight: "medium" }}
