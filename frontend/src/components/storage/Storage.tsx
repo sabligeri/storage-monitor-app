@@ -218,6 +218,40 @@ const Storage = () => {
         fetchQuantiTypes();
     }, [userId, jwtToken])
 
+
+    const handleRefillItem = async (itemId: number, quantity: number) => {
+        try {
+            const response = await fetch(`/api/item/${itemId}/refill`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${jwtToken}`,
+                },
+                body: JSON.stringify({ quantity }),
+            });
+    
+            if (!response.ok) throw new Error("Failed to refill item");
+            fetchItems();
+        } catch (error) {
+            console.error("Error refilling item:", error);
+        }
+    };
+    
+    const handleDeleteItem = async (itemId: number) => {
+        try {
+            const response = await fetch(`/api/item/${itemId}`, {
+                method: "DELETE",
+                headers: { "Authorization": `Bearer ${jwtToken}` },
+            });
+    
+            if (!response.ok) throw new Error("Failed to delete item");
+            fetchItems();
+        } catch (error) {
+            console.error("Error deleting item:", error);
+        }
+    };
+    
+
     if (loading) {
         return (
             <div id="loading-screen-container">
@@ -305,8 +339,8 @@ const Storage = () => {
                     <ItemCard
                         key={item.id}
                         item={item}
-                        onRefill={(item) => console.log("Refill", item)}
-                        onDelete={(item) => console.log("Delete", item)}
+                        onRefill={handleRefillItem}
+                        onDelete={handleDeleteItem}
                     />
                 ))}
             </div>
