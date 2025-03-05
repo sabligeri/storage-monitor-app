@@ -15,16 +15,15 @@ import java.util.Optional;
 @Service
 public class ItemService {
 
-    @Autowired
     private final ItemRepository itemRepository;
-    @Autowired
     private final StorageRepository storageRepository;
-    @Autowired
-    private ItemTypeRepository itemTypeRepository;
+    private final ItemTypeRepository itemTypeRepository;
 
-    public ItemService(ItemRepository itemRepository, StorageRepository storageRepository) {
+    @Autowired
+    public ItemService(ItemRepository itemRepository, StorageRepository storageRepository, ItemTypeRepository itemTypeRepository) {
         this.itemRepository = itemRepository;
         this.storageRepository = storageRepository;
+        this.itemTypeRepository = itemTypeRepository;
     }
 
     public boolean addItem(NewItemDTO newItemDTO){
@@ -50,6 +49,27 @@ public class ItemService {
 
         itemRepository.save(item);
 
+        return true;
+    }
+
+    public boolean deleteItem(Long itemId) {
+        if (!itemRepository.existsById(itemId)) {
+            throw new IllegalArgumentException("Item with ID " + itemId + " not found.");
+        }
+        itemRepository.deleteById(itemId);
+        return true;
+    }
+
+    public boolean refillItem(Long itemId, double quantity) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Item with ID " + itemId + " not found."));
+
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Refill quantity must be positive.");
+        }
+
+        item.setQuantity(item.getQuantity() + quantity);
+        itemRepository.save(item);
         return true;
     }
 }
