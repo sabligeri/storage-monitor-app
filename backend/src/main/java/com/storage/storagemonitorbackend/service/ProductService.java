@@ -13,16 +13,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
+    private final ItemRepository itemRepository;
+
     @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private ItemRepository itemRepository;
+    public ProductService(ProductRepository productRepository, UserRepository userRepository, ItemRepository itemRepository) {
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
+        this.itemRepository = itemRepository;
+    }
 
     public boolean addProduct(NewProductDTO newProductDTO) {
         UserEntity userEntity = userRepository.findById(newProductDTO.userId())
@@ -46,4 +53,23 @@ public class ProductService {
         productRepository.save(product);
         return true;
     }
+
+    public List<NewProductDTO> getProductsByUser(Long userId) {
+        return productRepository.findAllByUserEntityId(userId)
+                .stream()
+                .map(this::convertToDTO)
+                .toList();
+    }
+
+    private NewProductDTO convertToDTO(Product product) {
+        Set<NewProductItemDTO> items = product.getProductItems().stream()
+                .map(item -> new NewProductItemDTO(
+                        item.getItem().getId(),
+                        item.getQuantity()))
+                .collect(Collectors.toSet());
+
+        return new NewProductDTO(product.getName(), items.stream().toList(), product.getUserEntity().getId());
+    }
+
+
 }
