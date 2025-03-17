@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./Storage.css"
 import {
     AppBar,
     Toolbar,
@@ -11,12 +10,14 @@ import {
     ListItemButton,
     ListItemText,
     Divider,
+    Box,
 } from "@mui/material";
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ItemCreatorModal from "./ItemCreatorModal";
 import AddIcon from '@mui/icons-material/Add';
 import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
 import ItemCard from "./ItemCard";
+
 
 interface Item {
     id: number;
@@ -229,28 +230,28 @@ const Storage = () => {
                 },
                 body: JSON.stringify({ quantity }),
             });
-    
+
             if (!response.ok) throw new Error("Failed to refill item");
             fetchItems();
         } catch (error) {
             console.error("Error refilling item:", error);
         }
     };
-    
+
     const handleDeleteItem = async (itemId: number) => {
         try {
             const response = await fetch(`/api/item/${itemId}`, {
                 method: "DELETE",
                 headers: { "Authorization": `Bearer ${jwtToken}` },
             });
-    
+
             if (!response.ok) throw new Error("Failed to delete item");
             fetchItems();
         } catch (error) {
             console.error("Error deleting item:", error);
         }
     };
-    
+
 
     if (loading) {
         return (
@@ -270,8 +271,21 @@ const Storage = () => {
 
 
     return (
-        <div id="item-container">
-            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "rgba(255, 236, 139)", borderRadius: "5px"}}>
+        <Box
+            sx={{
+                margin: "0 auto",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                background: `radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
+                 linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%)`,
+                width: "95%",
+                height: "calc(89vh)",
+                overflowY: "scroll",
+                position: "relative",
+                "&::-webkit-scrollbar": { display: "none" },
+            }}
+        >
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "rgba(255, 236, 139)", borderRadius: "5px" }}>
                 <Toolbar>
                     <IconButton
                         sx={{ color: "black", fontWeight: "medium" }}
@@ -279,7 +293,7 @@ const Storage = () => {
                         onClick={() => setDrawerOpen(true)}
                     >
                         Options
-                        <ArrowRightIcon/>
+                        <ArrowRightIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
@@ -334,7 +348,23 @@ const Storage = () => {
                     handleCreateItemType
                 }}
             />
-            <div className="item-grid">
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                        xs: "repeat(1, 1fr)",
+                        sm: "repeat(2, 1fr)",
+                        md: "repeat(3, 1fr)",
+                        lg: "repeat(4, 1fr)",
+                    },
+                    gap: "2rem",
+                    padding: "2rem",
+                    justifyItems: "center", 
+                    justifyContent: "center", 
+                    backgroundColor: "inherit",
+                    overflowX: "hidden",
+                }}
+            >
                 {items.map((item) => (
                     <ItemCard
                         key={item.id}
@@ -343,8 +373,8 @@ const Storage = () => {
                         onDelete={handleDeleteItem}
                     />
                 ))}
-            </div>
-        </div >
+            </Box>
+        </Box>
     )
 }
 

@@ -25,7 +25,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link to="/product">
+              <Link to="/products">
                 <i className="bi bi-box-seam"></i> Product
               </Link>
             </li>

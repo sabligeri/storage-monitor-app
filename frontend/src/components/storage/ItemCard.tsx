@@ -13,6 +13,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import RefillItemModal from "./RefillItemModal";
 import DeleteItemModal from "./DeleteItemModal";
 
+
 interface Item {
   id: number;
   name: string;
@@ -51,12 +52,12 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onRefill, onDelete }) => {
             justifyContent: "space-between",
           }}
           title={
-            <Box sx={{ fontWeight: "bold", textAlign: "left", overflow: "auto", whiteSpace: "break-word", flexGrow: 1, maxWidth: "80%", maxHeight: 40 }}>
+            <Box sx={{ fontWeight: "bold", textAlign: "left", overflow: "auto", whiteSpace: "break-word", flexGrow: 1, maxWidth: "80%", maxHeight: 40, "&::-webkit-scrollbar": { display: "none" },}}>
               <Typography variant="h6">{item.name}</Typography>
             </Box>
           }
           action={
-            <IconButton onClick={handleMenuOpen} aria-label="settings">
+            <IconButton onClick={handleMenuOpen} aria-label="settings" >
               <MoreVertIcon />
             </IconButton>
           }
