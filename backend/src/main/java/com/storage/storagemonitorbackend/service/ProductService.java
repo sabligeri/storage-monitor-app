@@ -63,9 +63,15 @@ public class ProductService {
 
     private NewProductDTO convertToDTO(Product product) {
         Set<NewProductItemDTO> items = product.getProductItems().stream()
-                .map(item -> new NewProductItemDTO(
-                        item.getItem().getId(),
-                        item.getQuantity()))
+                .map(productItem -> {
+                    Item item = productItem.getItem();
+                    return new NewProductItemDTO(
+                            item.getId(),
+                            productItem.getQuantity(),
+                            item.getName(),
+                            item.getQuantityType()
+                    );
+                })
                 .collect(Collectors.toSet());
 
         return new NewProductDTO(product.getName(), items.stream().toList(), product.getUserEntity().getId());
