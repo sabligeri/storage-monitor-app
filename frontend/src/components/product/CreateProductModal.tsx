@@ -6,13 +6,14 @@ import AddIcon from "@mui/icons-material/Add";
 interface Storage {
   id: number;
   name: string;
-  items: { id: number; name: string }[];
+  items: { id: number; name: string, quantityType: string }[];
 }
 
 interface SelectedItem {
   id: number;
   name: string;
-  quantity: number;  
+  quantity: number;
+  quantityType: string;
 }
 
 interface CreateProductModalProps {
@@ -56,7 +57,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtToken}` },
         body: JSON.stringify({
           name: productName,
-          items: selectedItems.map((item) => ({ itemId: item.id, quantity: item.quantity })), 
+          items: selectedItems.map((item) => ({ itemId: item.id, quantity: item.quantity })),
           userId,
         }),
       });
@@ -97,7 +98,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
             onChange={(_, newValue) => {
               setSelectedItems(newValue.map(item => ({
                 ...item,
-                quantity: selectedItems.find(i => i.id === item.id)?.quantity || 1, 
+                quantity: selectedItems.find(i => i.id === item.id)?.quantity || 1,
               })));
             }}
             renderInput={(params) => <TextField {...params} label="Select Items" />}
@@ -122,6 +123,9 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
                   }}
                   sx={{ width: 80 }}
                 />
+                <Typography variant="body2" sx={{ fontStyle: "italic", color: "gray" }}>
+                  {item.quantityType}
+                </Typography>
               </Box>
             ))}
           </Box>

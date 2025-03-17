@@ -8,8 +8,15 @@ import CreateProductModal from "./CreateProductModal";
 interface Product {
   id: number;
   name: string;
-  items: { itemId: number; quantity: number }[];
+  items: ProductItem[];
   userId: number;
+}
+
+interface ProductItem {
+  itemId: number;
+  itemName: string; 
+  quantity: number;
+  quantityType: string; 
 }
 
 const Product = () => {

@@ -5,7 +5,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 interface Product {
     id: number;
     name: string;
-    items: { itemId: number; quantity: number }[];
+    items: { itemName: string; quantity: number; quantityType: string }[];
     userId: number;
 }
 
@@ -50,7 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                         {product.items.length > 0 ? (
                             product.items.map((item, index) => (
                                 <Typography key={index} variant="body2">
-                                    Item ID: {item.itemId} - Quantity: {item.quantity}
+                                    {item.itemName}: {item.quantity} {item.quantityType}
                                 </Typography>
                             ))
                         ) : (
