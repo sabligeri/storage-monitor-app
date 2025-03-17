@@ -7,6 +7,7 @@ import './App.css';
 import Header from './components/header/Header';
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
+import Product from './components/product/Product';
 
 function App() {
 
@@ -42,6 +43,14 @@ function App() {
           element={
             <PrivateRoute>
               <Storage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <PrivateRoute>
+              <Product />
             </PrivateRoute>
           }
         />

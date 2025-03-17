@@ -9,6 +9,7 @@ import App from './App';
 import PrivateRoute from './components/PrivateRoute'; 
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
+import Prodct from './components/product/Product';
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: 'storage/:storageId',
         element: <Storage />
+      },
+      {
+        path: 'products',
+        element: <Prodct />
       }
     ],
   },
