@@ -12,7 +12,7 @@ interface Storage {
 interface SelectedItem {
   id: number;
   name: string;
-  quantity: number;  // ÚJ: Tároljuk az item mennyiségét
+  quantity: number;  
 }
 
 interface CreateProductModalProps {
@@ -25,7 +25,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
   const [productName, setProductName] = useState("");
   const [selectedStorage, setSelectedStorage] = useState<number | null>(null);
   const [storageList, setStorageList] = useState<Storage[]>([]);
-  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]); // Módosítottuk az állapotot
+  const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
 
   const savedData = localStorage.getItem("jwt-response");
   const parsedData = savedData ? JSON.parse(savedData) : null;
@@ -56,7 +56,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtToken}` },
         body: JSON.stringify({
           name: productName,
-          items: selectedItems.map((item) => ({ itemId: item.id, quantity: item.quantity })), // Küldjük a mennyiséget is
+          items: selectedItems.map((item) => ({ itemId: item.id, quantity: item.quantity })), 
           userId,
         }),
       });
@@ -97,7 +97,7 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
             onChange={(_, newValue) => {
               setSelectedItems(newValue.map(item => ({
                 ...item,
-                quantity: selectedItems.find(i => i.id === item.id)?.quantity || 1, // Ha már volt beállított mennyiség, megtartjuk
+                quantity: selectedItems.find(i => i.id === item.id)?.quantity || 1, 
               })));
             }}
             renderInput={(params) => <TextField {...params} label="Select Items" />}
