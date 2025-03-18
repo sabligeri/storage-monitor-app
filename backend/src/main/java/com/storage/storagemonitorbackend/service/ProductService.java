@@ -1,6 +1,7 @@
 package com.storage.storagemonitorbackend.service;
 
 import com.storage.storagemonitorbackend.dto.product.NewProductDTO;
+import com.storage.storagemonitorbackend.dto.production.ProductionRequestDTO;
 import com.storage.storagemonitorbackend.dto.productitem.NewProductItemDTO;
 import com.storage.storagemonitorbackend.entity.Item;
 import com.storage.storagemonitorbackend.entity.Product;
@@ -77,5 +78,28 @@ public class ProductService {
         return new NewProductDTO(product.getName(), items.stream().toList(), product.getUserEntity().getId());
     }
 
+    public String simulateProduction(ProductionRequestDTO request) {
+        Product product = productRepository.findById(request.productId())
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + request.productId()));
+
+        for (ProductItem productItem : product.getProductItems()) {
+            Item item = productItem.getItem();
+            double requiredAmount = productItem.getQuantity() * request.quantity();
+
+            if (item.getQuantity() < requiredAmount) {
+                return "Not enough " + item.getName() + " available. Needed: "
+                        + requiredAmount + ", Available: " + item.getQuantity();
+            }
+        }
+
+        for (ProductItem productItem : product.getProductItems()) {
+            Item item = productItem.getItem();
+            double requiredAmount = productItem.getQuantity() * request.quantity();
+            item.setQuantity(item.getQuantity() - requiredAmount);
+            itemRepository.save(item);
+        }
+
+        return "Production successful! " + request.quantity() + " units of " + product.getName() + " produced.";
+    }
 
 }

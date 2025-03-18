@@ -66,6 +66,7 @@ public class WebSecurityConfig {
                             .requestMatchers("/api/itemType/**").hasRole("USER")
                             .requestMatchers("/api/item/**").hasRole("USER")
                             .requestMatchers("/api/product/**").hasRole("USER")
+                            .requestMatchers("/api/production/**").hasRole("USER")
                             .anyRequest().authenticated()
             );
 
