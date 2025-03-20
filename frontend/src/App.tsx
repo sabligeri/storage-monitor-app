@@ -8,6 +8,7 @@ import Header from './components/header/Header';
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
 import Product from './components/product/Product';
+import ProductionSimulator from './components/production/ProductionSimulator';
 
 function App() {
 
@@ -51,6 +52,14 @@ function App() {
           element={
             <PrivateRoute>
               <Product />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/production"
+          element={
+            <PrivateRoute>
+              <ProductionSimulator />
             </PrivateRoute>
           }
         />

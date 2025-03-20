@@ -82,7 +82,10 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
 
         <FormControl fullWidth sx={{ mb: 2 }}>
           <InputLabel>Select Storage</InputLabel>
-          <Select value={selectedStorage || ""} onChange={(e) => setSelectedStorage(Number(e.target.value))}>
+          <Select
+            value={selectedStorage || ""}
+            onChange={(e) => setSelectedStorage(Number(e.target.value))}
+          >
             {storageList.map((storage) => (
               <MenuItem key={storage.id} value={storage.id}>{storage.name}</MenuItem>
             ))}
