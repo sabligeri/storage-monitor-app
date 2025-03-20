@@ -20,8 +20,8 @@ const StorageList = () => {
 
     const savedData = localStorage.getItem("jwt-response");
     const parsedData = savedData ? JSON.parse(savedData) : null;
-    const userId = parsedData?.id;
     const jwtToken = parsedData?.jwt;
+    const userId = parsedData?.id;
 
     const fetchStorages = async () => {
         if (!userId || !jwtToken) {

@@ -56,6 +56,9 @@ const Product = () => {
 
   useEffect(() => {
     fetchProducts();
+    for(let i = 0; i < products.length; i++) {
+      console.log("Product ID: " + products[i].id);
+    }
   }, [userId, jwtToken]);
 
   if (loading) {

@@ -1,6 +1,7 @@
 package com.storage.storagemonitorbackend.service;
 
 import com.storage.storagemonitorbackend.dto.product.NewProductDTO;
+import com.storage.storagemonitorbackend.dto.product.ProductDTO;
 import com.storage.storagemonitorbackend.dto.production.ProductionRequestDTO;
 import com.storage.storagemonitorbackend.dto.productitem.NewProductItemDTO;
 import com.storage.storagemonitorbackend.entity.Item;
@@ -11,11 +12,10 @@ import com.storage.storagemonitorbackend.repository.ItemRepository;
 import com.storage.storagemonitorbackend.repository.ProductRepository;
 import com.storage.storagemonitorbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,14 +55,14 @@ public class ProductService {
         return true;
     }
 
-    public List<NewProductDTO> getProductsByUser(Long userId) {
+    public List<ProductDTO> getProductsByUser(Long userId) {
         return productRepository.findAllByUserEntityId(userId)
                 .stream()
                 .map(this::convertToDTO)
                 .toList();
     }
 
-    private NewProductDTO convertToDTO(Product product) {
+    private ProductDTO convertToDTO(Product product) {
         Set<NewProductItemDTO> items = product.getProductItems().stream()
                 .map(productItem -> {
                     Item item = productItem.getItem();
@@ -75,10 +75,10 @@ public class ProductService {
                 })
                 .collect(Collectors.toSet());
 
-        return new NewProductDTO(product.getName(), items.stream().toList(), product.getUserEntity().getId());
+        return new ProductDTO(product.getId(), product.getName(), items.stream().toList(), product.getUserEntity().getId());
     }
 
-    public String simulateProduction(ProductionRequestDTO request) {
+    public ResponseEntity<Map<String, String>> simulateProduction(ProductionRequestDTO request) {
         Product product = productRepository.findById(request.productId())
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + request.productId()));
 
@@ -87,8 +87,10 @@ public class ProductService {
             double requiredAmount = productItem.getQuantity() * request.quantity();
 
             if (item.getQuantity() < requiredAmount) {
-                return "Not enough " + item.getName() + " available. Needed: "
-                        + requiredAmount + ", Available: " + item.getQuantity();
+                Map<String, String> response = new HashMap<>();
+                response.put("error", "Not enough " + item.getName() + " available. Needed: "
+                        + requiredAmount + ", Available: " + item.getQuantity());
+                return ResponseEntity.badRequest().body(response);
             }
         }
 
@@ -99,7 +101,10 @@ public class ProductService {
             itemRepository.save(item);
         }
 
-        return "Production successful! " + request.quantity() + " units of " + product.getName() + " produced.";
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Production successful! " + request.quantity() + " units of " + product.getName() + " produced.");
+        return ResponseEntity.ok(response);
     }
+
 
 }

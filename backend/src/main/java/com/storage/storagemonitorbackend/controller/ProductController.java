@@ -1,6 +1,7 @@
 package com.storage.storagemonitorbackend.controller;
 
 import com.storage.storagemonitorbackend.dto.product.NewProductDTO;
+import com.storage.storagemonitorbackend.dto.product.ProductDTO;
 import com.storage.storagemonitorbackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<NewProductDTO> getProductsByUser(@PathVariable Long userId) {
+    public List<ProductDTO> getProductsByUser(@PathVariable Long userId) {
         return productService.getProductsByUser(userId);
     }
 }

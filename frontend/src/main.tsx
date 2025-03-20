@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
 import Prodct from './components/product/Product';
+import ProductionSimulator from './components/production/ProductionSimulator';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 'products',
         element: <Prodct />
+      },
+      {
+        path: 'production',
+        element: <ProductionSimulator />
       }
     ],
   },
