@@ -1,16 +1,16 @@
-import {Link, useNavigate} from 'react-router-dom';
-import './Header.css';
+import { Link, useNavigate } from 'react-router-dom';
+import './NavBar.css';
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-export default function Header() {
+export default function NavBar() {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('jwt-response');
     navigate('/login');
   };
 
-    return (
-      <header id='headbar'>
+  return (
+    <header id='headbar'>
       <nav>
         <div id="nav-left">
           <ul>
@@ -42,5 +42,5 @@ export default function Header() {
         </div>
       </nav>
     </header>
-    );
+  );
 }

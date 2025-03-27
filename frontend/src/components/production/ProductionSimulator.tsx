@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
+import { getUserData } from "../../utils/getUserData";
 
 interface Product {
     id: number;
@@ -14,10 +16,9 @@ const ProductionSimulator: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    const savedData = localStorage.getItem("jwt-response");
-    const parsedData = savedData ? JSON.parse(savedData) : null;
-    const jwtToken = parsedData?.jwt;
-    const userId = parsedData?.id;
+    const userData = getUserData();
+    const userId = userData?.id;
+    const jwtToken = userData?.jwt;
     
 
     useEffect(() => {
@@ -95,19 +96,13 @@ const ProductionSimulator: React.FC = () => {
 
     if (loading) {
         return (
-            <div id="loading-screen-container">
-                <div className="loader"></div>
-            </div>
+            <LoadingScreen />
         );
     }
 
     if (error) {
         return (
-            <div id="storage-error-container">
-                <i className="bi bi-cone-striped" style={{ color: "orange" }}></i>
-                {error}
-                <i className="bi bi-cone-striped" style={{ color: "orange" }}></i>
-            </div>
+           <ErrorScreen error={error} />
         );
     }
 

@@ -12,14 +12,14 @@ const Login = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            loginUser({ username, password });
+            await loginUser({ username, password });
             navigate('/home');
         } catch (error) {
             setErrorr('Login failed: ' + error);
         }
     }
 
-    return(
+    return (
         <div className="login-container">
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
@@ -41,7 +41,7 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                    />      
+                    />
                 </div>
                 {error && <p className="error-message">{error}</p>}
                 <button type="submit">Login</button>

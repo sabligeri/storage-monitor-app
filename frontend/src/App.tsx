@@ -4,7 +4,7 @@ import Login from './components/auth/Login';
 import Home from './components/Home';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
-import Header from './components/header/Header';
+import NavBar from './components/navbar/NavBar';
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
 import Product from './components/product/Product';
@@ -18,7 +18,7 @@ function App() {
 
   return (
     <>
-      {!hideHeaderLocations.includes(location.pathname) && <Header />}
+      {!hideHeaderLocations.includes(location.pathname) && <NavBar />}
       <Routes>
         <Route path="/" element={<Navigate replace to="/register" />} />
         <Route path="/register" element={<Register />} />

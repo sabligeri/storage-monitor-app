@@ -4,6 +4,8 @@ import "./StorageCreator"
 import StorageCreator from "./StorageCreator";
 import StorageCard from "./StorageCard";
 import DeleteStorageModal from "./DeleteStorageModal";
+import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
+import { getUserData } from "../../utils/getUserData";
 
 interface Storage {
     id: number;
@@ -18,10 +20,10 @@ const StorageList = () => {
     const [newStorageName, setNewStorageName] = useState<string>("");
     const [storageToDelete, setStorageToDelete] = useState<null | number>(null)
 
-    const savedData = localStorage.getItem("jwt-response");
-    const parsedData = savedData ? JSON.parse(savedData) : null;
-    const jwtToken = parsedData?.jwt;
-    const userId = parsedData?.id;
+    const userData = getUserData();
+    const userId = userData?.id;
+    const jwtToken = userData?.jwt;
+    
 
     const fetchStorages = async () => {
         if (!userId || !jwtToken) {
@@ -103,20 +105,16 @@ const StorageList = () => {
     }, [userId, jwtToken])
 
 
-    if (loading) {
+if (loading) {
         return (
-            <div id="loading-screen-container">
-                <div className="loader"></div>
-            </div>
-        )
+            <LoadingScreen />
+        );
     }
 
     if (error) {
         return (
-            <div id="storage-error-container">
-                <i className="bi bi-cone-striped" style={{ "color": "orange" }}></i> {error} <i className="bi bi-cone-striped" style={{ "color": "orange" }}></i>
-            </div>
-        )
+           <ErrorScreen error={error} />
+        );
     }
 
     return (
