@@ -13,17 +13,14 @@ const Home = () => {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: "inherit", minHeight: "100vh", color: "white" }}>
-      <Typography variant="h4" sx={{ textAlign: "center", mt: 3, fontWeight: "bold" }}>
-        Welcome to Storage Monitor, {username}!
-      </Typography>
+    <Box sx={{ backgroundColor: "beige", color: "black" }}>
 
-      <Box sx={{ backgroundColor: "#763626", py: 5, px: 5 }}>
+      <Box sx={{ backgroundColor: "beige", py: 5, px: 5, textAlign: "center" }}>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={6}>
             <Box sx={{ px: 5 }}>
               <Typography variant="h2" fontWeight="bold">Storage Monitor</Typography>
-
+              <Typography variant="h6" sx={{color: "grey"}}>Welcome, {username}! We have been expecting you!</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -36,7 +33,7 @@ const Home = () => {
         </Grid>
       </Box>
 
-      <Box sx={{ backgroundColor: "#90AFC5", px: 5, color: "black", py: 5 }}>
+      <Box sx={{ backgroundColor: "white", px: 5, color: "black", py: 5 }}>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={6}>
             <img
@@ -60,7 +57,7 @@ const Home = () => {
         </Grid>
       </Box>
 
-      <Box sx={{ py: 6, px: 4 }}>
+      <Box sx={{ py: 6, px: 4, color: "black" }}>
         <Typography variant="h4" sx={{ textAlign: "center", fontWeight: "bold", mb: 4 }}>
           Our Services
         </Typography>
@@ -111,7 +108,7 @@ const Home = () => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ textAlign: "center", py: 2 }}>
+      <Box sx={{ textAlign: "center",color: "black"}}>
         <Typography variant="body2">© Storage Monitor, Inc. All rights reserved.</Typography>
       </Box>
     </Box>
