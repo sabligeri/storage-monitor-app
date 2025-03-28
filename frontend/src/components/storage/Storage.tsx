@@ -17,6 +17,8 @@ import ItemCreatorModal from "./ItemCreatorModal";
 import AddIcon from '@mui/icons-material/Add';
 import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
 import ItemCard from "./ItemCard";
+import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
+import { getUserData } from "../../utils/getUserData";
 
 
 interface Item {
@@ -50,10 +52,9 @@ const Storage = () => {
     const [openCreateItemType, setOpenCreateItemType] = useState(false);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    const savedData = localStorage.getItem("jwt-response");
-    const parsedData = savedData ? JSON.parse(savedData) : null;
-    const userId = parsedData?.id;
-    const jwtToken = parsedData?.jwt;
+    const userData = getUserData();
+    const userId = userData?.id;
+    const jwtToken = userData?.jwt;
 
     const fetchItems = async () => {
         if (!userId || !jwtToken) {
@@ -253,20 +254,16 @@ const Storage = () => {
     };
 
 
-    if (loading) {
+if (loading) {
         return (
-            <div id="loading-screen-container">
-                <div className="loader"></div>
-            </div>
-        )
+            <LoadingScreen />
+        );
     }
 
     if (error) {
         return (
-            <div id="storage-error-container">
-                <i className="bi bi-cone-striped" style={{ "color": "orange" }}></i> {error} <i className="bi bi-cone-striped" style={{ "color": "orange" }}></i>
-            </div>
-        )
+           <ErrorScreen error={error} />
+        );
     }
 
 
@@ -278,7 +275,7 @@ const Storage = () => {
                 borderRadius: "8px",
                 background: `radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
                  linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%)`,
-                width: "95%",
+                width: "100%",
                 height: "calc(89vh)",
                 overflowY: "scroll",
                 position: "relative",

@@ -4,6 +4,8 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import ProductCard from "./ProductCard";
 import CreateProductModal from "./CreateProductModal";
+import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
+import { getUserData } from "../../utils/getUserData";
 
 interface Product {
   id: number;
@@ -26,10 +28,9 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const savedData = localStorage.getItem("jwt-response");
-  const parsedData = savedData ? JSON.parse(savedData) : null;
-  const userId = parsedData?.id;
-  const jwtToken = parsedData?.jwt;
+    const userData = getUserData();
+    const userId = userData?.id;
+    const jwtToken = userData?.jwt;
 
   const fetchProducts = async () => {
     if (!userId || !jwtToken) {
@@ -61,21 +62,17 @@ const Product = () => {
     }
   }, [userId, jwtToken]);
 
-  if (loading) {
-    return (
-      <div id="loading-screen-container">
-        <div className="loader"></div>
-      </div>
-    )
-  }
+if (loading) {
+        return (
+            <LoadingScreen />
+        );
+    }
 
-  if (error) {
-    return (
-      <div id="storage-error-container">
-        <i className="bi bi-cone-striped" style={{ "color": "orange" }}></i> {error} <i className="bi bi-cone-striped" style={{ "color": "orange" }}></i>
-      </div>
-    )
-  }
+    if (error) {
+        return (
+           <ErrorScreen error={error} />
+        );
+    }
 
   return (
     <Box sx={{
