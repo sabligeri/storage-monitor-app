@@ -12,6 +12,7 @@ import StorageCard from "./StorageCard";
 import DeleteStorageModal from "./DeleteStorageModal";
 import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 interface Storage {
     id: number;
@@ -165,7 +166,7 @@ const StorageList = () => {
                         <StorageCard key={storage.id} storage={storage} onDelete={setStorageToDelete} />
                     ))
                 ) : (
-                    <Typography color="#1B1B1B">No storages found.</Typography>
+                    <Typography color="#1B1B1B">No storages found. Click on the + icon to create your first storage!</Typography>
                 )}
             </Paper>
             <DeleteStorageModal

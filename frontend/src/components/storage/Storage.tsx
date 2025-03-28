@@ -275,7 +275,7 @@ if (loading) {
                 borderRadius: "8px",
                 background: `radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
                  linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%)`,
-                width: "95%",
+                width: "100%",
                 height: "calc(89vh)",
                 overflowY: "scroll",
                 position: "relative",

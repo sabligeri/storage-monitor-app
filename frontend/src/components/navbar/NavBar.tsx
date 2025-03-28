@@ -1,46 +1,82 @@
-import { Link, useNavigate } from 'react-router-dom';
-import './NavBar.css';
-import "bootstrap-icons/font/bootstrap-icons.css";
+import { AppBar, Toolbar, IconButton, Typography, Box, Button, Tooltip } from "@mui/material";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import WarehouseIcon from "@mui/icons-material/Warehouse";
+import InventoryIcon from "@mui/icons-material/Inventory2";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-export default function NavBar() {
+const NavBar = () => {
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem('jwt-response');
-    navigate('/login');
+    localStorage.removeItem("jwt-response");
+    navigate("/login");
   };
 
   return (
-    <header id='headbar'>
-      <nav>
-        <div id="nav-left">
-          <ul>
-            <li>
-              <Link to="/home">
-                <i className="bi bi-house"></i> Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/storagelist">
-                <i className="bi bi-building"></i> Storage
-              </Link>
-            </li>
-            <li>
-              <Link to="/products">
-                <i className="bi bi-box-seam"></i> Product
-              </Link>
-            </li>
-            <li>
-              <Link to="/production">
-                <i className="bi bi-play-circle"></i> Production
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div id="nav-right">
-          <p onClick={handleLogout}>
-            <i className="bi bi-box-arrow-right"></i> Logout</p>
-        </div>
-      </nav>
-    </header>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "#1B1B1B", // timeless noir
+        boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+        zIndex: 1200,
+      }}
+    >
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex", gap: 4 }}>
+          <Tooltip title="Home">
+            <Button
+              component={RouterLink}
+              to="/home"
+              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              startIcon={<HomeIcon />}
+            >
+              Home
+            </Button>
+          </Tooltip>
+          <Tooltip title="Storage">
+            <Button
+              component={RouterLink}
+              to="/storagelist"
+              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              startIcon={<WarehouseIcon />}
+            >
+              Storage
+            </Button>
+          </Tooltip>
+          <Tooltip title="Products">
+            <Button
+              component={RouterLink}
+              to="/products"
+              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              startIcon={<InventoryIcon />}
+            >
+              Product
+            </Button>
+          </Tooltip>
+          <Tooltip title="Production">
+            <Button
+              component={RouterLink}
+              to="/production"
+              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              startIcon={<PlayCircleIcon />}
+            >
+              Production
+            </Button>
+          </Tooltip>
+        </Box>
+
+        <Box sx={{ ml: "auto" }}>
+          <Tooltip title="Logout">
+            <IconButton onClick={handleLogout} sx={{ color: "#f6f202" }}>
+              <LogoutIcon />
+            </IconButton>
+          </Tooltip>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
+
+export default NavBar;
