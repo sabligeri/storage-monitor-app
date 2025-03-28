@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, IconButton, Typography, Box, Button, Tooltip } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Box, Button, Tooltip } from "@mui/material";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
@@ -18,7 +18,7 @@ const NavBar = () => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "#1B1B1B", // timeless noir
+        backgroundColor: "#1B1B1B", 
         boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
         zIndex: 1200,
       }}

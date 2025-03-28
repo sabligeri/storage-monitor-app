@@ -30,8 +30,8 @@ const StorageCard: React.FC<StorageCardProps> = ({ storage, onDelete }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 border: `2px solid #595f39`,
-                backgroundColor: "#C4C5BA", // sophisticated sage
-                color: "#1B1B1B", // timeless noir
+                backgroundColor: "#C4C5BA", 
+                color: "#1B1B1B", 
                 px: 3,
                 py: 2,
                 mb: 2,

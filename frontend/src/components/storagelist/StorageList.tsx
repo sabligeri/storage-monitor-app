@@ -12,7 +12,6 @@ import StorageCard from "./StorageCard";
 import DeleteStorageModal from "./DeleteStorageModal";
 import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 interface Storage {
     id: number;
@@ -110,7 +109,7 @@ const StorageList = () => {
         <Box
             sx={{
                 p: 4,
-                backgroundColor: "#E4E4DE", // Ethereal Ivory
+                backgroundColor: "#E4E4DE", 
                 minHeight: "83vh",
                 position: "relative",
             }}
@@ -123,10 +122,10 @@ const StorageList = () => {
                         position: "absolute",
                         top: 16,
                         left: 16,
-                        backgroundColor: "#595f39", // Muted Moss
-                        color: "#E4E4DE",           // Ivory icon
+                        backgroundColor: "#595f39", 
+                        color: "#E4E4DE",           
                         "&:hover": {
-                            backgroundColor: "#1B1B1B", // Timeless Noir on hover
+                            backgroundColor: "#1B1B1B", 
                         },
                     }}
                 >
@@ -139,7 +138,7 @@ const StorageList = () => {
                 fontWeight="bold"
                 mb={3}
                 textAlign="center"
-                color="#1B1B1B" // Timeless Noir
+                color="#1B1B1B" 
             >
                 Your Storages
             </Typography>

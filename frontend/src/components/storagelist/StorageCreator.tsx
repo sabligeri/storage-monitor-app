@@ -42,10 +42,10 @@ const StorageCreator: React.FC<Props> = ({
                                 variant="contained"
                                 onClick={handleStorageCreate}
                                 sx={{
-                                    backgroundColor: "#595f39", // Muted Moss
-                                    color: "#E4E4DE",           // Ivory
+                                    backgroundColor: "#595f39", 
+                                    color: "#E4E4DE",           
                                     "&:hover": {
-                                        backgroundColor: "#1B1B1B", // Darker hover
+                                        backgroundColor: "#1B1B1B", 
                                     },
                                 }}
                             >
