@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
 import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
+import { fetchProducts } from "../../utils/fetches/ProductService";
+import { simulateProduction } from "../../utils/fetches/ProductionService";
 
 interface Product {
     id: number;
@@ -19,73 +21,41 @@ const ProductionSimulator: React.FC = () => {
     const userData = getUserData();
     const userId = userData?.id;
     const jwtToken = userData?.jwt;
-    
+
 
     useEffect(() => {
-        console.log("🔹 JWT Token:", jwtToken);
-        console.log("🔹 User ID:", userId);
-
         if (!jwtToken || !userId) {
             setError("User is not authenticated.");
             setLoading(false);
             return;
         }
 
-        const fetchProducts = async () => {
+        const loadProducts = async () => {
             try {
-                const response = await fetch(`/api/product/user/${userId}`, {
-                    headers: { Authorization: `Bearer ${jwtToken}` },
-                });
-
-                console.log("🔹 Fetch Products Response Status:", response.status);
-
-                if (!response.ok) throw new Error("Failed to fetch products");
-
-                const data = await response.json();
-                console.log("✅ Fetched products:", data);
+                const data = await fetchProducts(userId, jwtToken);
                 setProducts(data);
-            } catch (error) {
-                console.error("❌ Error fetching products:", error);
+            } catch (err) {
+                console.error("❌ Error fetching products:", err);
                 setError("Error fetching products. Please try again.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchProducts();
-    }, [jwtToken, userId]);
-
-    
-
+        loadProducts();
+    }, [userId, jwtToken]);
 
     const handleSimulateProduction = async () => {
-        console.log("🔹 Selected Product ID:", selectedProduct); 
-        if (!selectedProduct || quantity < 1) return;
+        if (!selectedProduct || quantity < 1 || !jwtToken) return;
 
         setResultMessage(null);
 
         try {
-            const response = await fetch("/api/production/simulate", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`
-                },
-                body: JSON.stringify({
-                    productId: selectedProduct,
-                    quantity: quantity
-                }),
-            });
-
-            console.log("🔹 Simulation Response Status:", response.status);
-
-            const result = await response.json();
-            console.log("✅ Simulation Result:", result);
-
-            if (!response.ok) {
-                setResultMessage(result.error);
+            const result = await simulateProduction(selectedProduct, quantity, jwtToken);
+            if (result.error) {
+                setResultMessage(`Error: ${result.error}`);
             } else {
-                setResultMessage(result.message);
+                setResultMessage(result.message || "Simulation complete.");
             }
         } catch (error) {
             setResultMessage("Error simulating production.");
@@ -102,7 +72,7 @@ const ProductionSimulator: React.FC = () => {
 
     if (error) {
         return (
-           <ErrorScreen error={error} />
+            <ErrorScreen error={error} />
         );
     }
 
@@ -128,10 +98,9 @@ const ProductionSimulator: React.FC = () => {
                 <Select
                     value={selectedProduct || ""}
                     onChange={(e) => {
-                        console.log("🔹 Product selected:", e.target.value, typeof e.target.value);
                         setSelectedProduct(Number(e.target.value));
                     }}
-                
+
                 >
                     {products.map((product) => (
                         <MenuItem key={product.id} value={product.id}>

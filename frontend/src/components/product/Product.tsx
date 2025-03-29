@@ -6,6 +6,7 @@ import ProductCard from "./ProductCard";
 import CreateProductModal from "./CreateProductModal";
 import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
+import { fetchProducts as fetchProductsAPI } from "../../utils/fetches/ProductService";
 
 interface Product {
   id: number;
@@ -16,9 +17,9 @@ interface Product {
 
 interface ProductItem {
   itemId: number;
-  itemName: string; 
+  itemName: string;
   quantity: number;
-  quantityType: string; 
+  quantityType: string;
 }
 
 const Product = () => {
@@ -28,9 +29,9 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-    const userData = getUserData();
-    const userId = userData?.id;
-    const jwtToken = userData?.jwt;
+  const userData = getUserData();
+  const userId = userData?.id;
+  const jwtToken = userData?.jwt;
 
   const fetchProducts = async () => {
     if (!userId || !jwtToken) {
@@ -40,16 +41,11 @@ const Product = () => {
     }
 
     try {
-      const response = await fetch(`/api/product/user/${userId}`, {
-        headers: { Authorization: `Bearer ${jwtToken}` },
-      });
-
-      if (!response.ok) throw new Error("Failed to fetch products");
-
-      const data = await response.json();
+      const data = await fetchProductsAPI(userId, jwtToken);
       setProducts(data);
     } catch (error) {
-      setError("Error fetching products: " + error);
+      console.error(error);
+      setError("Error fetching products.");
     } finally {
       setLoading(false);
     }
@@ -57,22 +53,22 @@ const Product = () => {
 
   useEffect(() => {
     fetchProducts();
-    for(let i = 0; i < products.length; i++) {
+    for (let i = 0; i < products.length; i++) {
       console.log("Product ID: " + products[i].id);
     }
   }, [userId, jwtToken]);
 
-if (loading) {
-        return (
-            <LoadingScreen />
-        );
-    }
+  if (loading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
-    if (error) {
-        return (
-           <ErrorScreen error={error} />
-        );
-    }
+  if (error) {
+    return (
+      <ErrorScreen error={error} />
+    );
+  }
 
   return (
     <Box sx={{
