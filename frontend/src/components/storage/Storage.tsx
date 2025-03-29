@@ -19,6 +19,15 @@ import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
 import ItemCard from "./ItemCard";
 import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
+import {
+    fetchItems as fetchItemsAPI,
+    fetchItemTypes,
+    fetchQuantityTypes,
+    createItem,
+    createItemType,
+    refillItem,
+    deleteItem,
+} from "../../utils/fetches/ItemService";
 
 
 interface Item {
@@ -57,38 +66,18 @@ const Storage = () => {
     const jwtToken = userData?.jwt;
 
     const fetchItems = async () => {
-        if (!userId || !jwtToken) {
-            setError("User id or token not found");
-            setLoading(false);
-            return;
-        }
+        if (!storageId || !jwtToken) return;
 
         try {
-            const response = await fetch(`/api/storage/${storageId}/items`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`,
-                }
-            })
-
-            if (response.status === 204) {
-                setItems([]);
-                return;
-            }
-
-            const data = await response.json();
+            const data = await fetchItemsAPI(storageId, jwtToken);
             setItems(data);
-
         } catch (error) {
-            console.error("Error occured while fetching items ", error)
-            setError("Error occured while fetching items " + error)
-        } finally {
-            setLoading(false)
+            console.error(error);
+            setError("Failed to fetch items.");
         }
-    }
+    };
 
-    const fetchItemTypes = async () => {
+    const fetchAll = async () => {
         if (!userId || !jwtToken) {
             setError("User id or token not found");
             setLoading(false);
@@ -96,82 +85,28 @@ const Storage = () => {
         }
 
         try {
-            const response = await fetch(`/api/itemType/user/${userId}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`,
-                }
-            })
+            const [itemsData, typesData, quantityData] = await Promise.all([
+                fetchItemsAPI(storageId!, jwtToken),
+                fetchItemTypes(userId, jwtToken),
+                fetchQuantityTypes(),
+            ]);
 
-            if (response.status === 204) {
-                setItems([]);
-                return;
-            }
-
-            const data = await response.json();
-            setItemTypes(data);
-
-        } catch (error) {
-            console.error("Error occured while fetching item types: ", error)
-            setError("Error occured while fetching item types: " + error);
+            setItems(itemsData);
+            setItemTypes(typesData);
+            setQuantityTypes(quantityData);
+        } catch (err) {
+            console.error(err);
+            setError("Error loading data.");
         } finally {
-            setLoading(false)
-        }
-    }
-
-    const fetchQuantiTypes = async () => {
-        if (!userId || !jwtToken) {
-            setError("User id or token not found");
             setLoading(false);
-            return;
         }
-
-        try {
-            const response = await fetch("/api/quantity-types/", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            })
-
-            const data = await response.json();
-            setQuantityTypes(data);
-
-        } catch (error) {
-            console.error("Error occured while fetching quantityTypes: ", error)
-            setError("Error occured while fetching quantityTypes: " + error)
-        } finally {
-            setLoading(false)
-        }
-    }
+    };
 
     const handleCreateItem = async () => {
-        if (!newItemName.trim() || newItemTypeId <= 0 || !newItemQuantityType.trim() || newItemQuantity < 0) {
-            return;
-        }
+        if (!newItemName.trim() || newItemTypeId <= 0 || !newItemQuantityType.trim() || newItemQuantity < 0 || !storageId || !jwtToken) return;
 
         try {
-            const response = await fetch(`/api/item/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`,
-                },
-                body: JSON.stringify({
-                    name: newItemName,
-                    quantity: newItemQuantity,
-                    quantityType: newItemQuantityType,
-                    storageId: storageId,
-                    itemTypeId: newItemTypeId
-                }),
-            })
-
-            if (!response.ok) {
-                setError("Failed to create item");
-                throw new Error("Failed to create item");
-            }
-
+            await createItem(newItemName, newItemQuantity, newItemQuantityType, storageId, newItemTypeId, jwtToken);
             setNewItemName("");
             setNewItemTypeId(0);
             setNewItemQuantityType("");
@@ -179,60 +114,27 @@ const Storage = () => {
             fetchItems();
             setOpenCreateItem(false);
         } catch (error) {
-            setError("Error occured while creating Item: \n" + error);
+            setError("Error occurred while creating item: " + error);
         }
-    }
+    };
 
     const handleCreateItemType = async () => {
-        if (!newItemTypeName.trim()) {
-            return;
-        }
+        if (!newItemTypeName.trim() || !userId || !jwtToken) return;
 
         try {
-            const response = await fetch(`/api/itemType/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`,
-                },
-                body: JSON.stringify({
-                    name: newItemTypeName,
-                    userId: userId
-                }),
-            })
-
-            if (!response.ok) {
-                setError("Failed to create item type");
-                throw new Error("Failed to create item type");
-            }
-
+            await createItemType(newItemTypeName, userId, jwtToken);
             setNewItemTypeName("");
-            fetchItemTypes();
+            fetchAll();
             setOpenCreateItemType(false);
         } catch (error) {
-            setError("Error occured while creating Item Type: \n" + error);
+            setError("Error occurred while creating item type: " + error);
         }
-    }
-
-    useEffect(() => {
-        fetchItems();
-        fetchItemTypes();
-        fetchQuantiTypes();
-    }, [userId, jwtToken])
-
+    };
 
     const handleRefillItem = async (itemId: number, quantity: number) => {
+        if (!jwtToken) return;
         try {
-            const response = await fetch(`/api/item/${itemId}/refill`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${jwtToken}`,
-                },
-                body: JSON.stringify({ quantity }),
-            });
-
-            if (!response.ok) throw new Error("Failed to refill item");
+            await refillItem(itemId, quantity, jwtToken);
             fetchItems();
         } catch (error) {
             console.error("Error refilling item:", error);
@@ -240,18 +142,18 @@ const Storage = () => {
     };
 
     const handleDeleteItem = async (itemId: number) => {
+        if (!jwtToken) return;
         try {
-            const response = await fetch(`/api/item/${itemId}`, {
-                method: "DELETE",
-                headers: { "Authorization": `Bearer ${jwtToken}` },
-            });
-
-            if (!response.ok) throw new Error("Failed to delete item");
+            await deleteItem(itemId, jwtToken);
             fetchItems();
         } catch (error) {
             console.error("Error deleting item:", error);
         }
     };
+
+    useEffect(() => {
+        fetchAll();
+    }, [userId, jwtToken]);
 
 
 if (loading) {
