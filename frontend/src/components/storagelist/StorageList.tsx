@@ -12,7 +12,7 @@ import StorageCard from "./StorageCard";
 import DeleteStorageModal from "./DeleteStorageModal";
 import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { fetchStorages as fetchStoragesAPI, createStorage, deleteStorage } from "../../utils/fetches/StorageService";
 
 interface Storage {
     id: number;
@@ -39,18 +39,9 @@ const StorageList = () => {
         }
 
         try {
-            const response = await fetch(`/api/storage/user/${userId}`, {
-                headers: { Authorization: `Bearer ${jwtToken}` },
-            });
-
-            if (response.status === 204) {
-                setStorages([]);
-                return;
-            }
-
-            const data = await response.json();
+            const data = await fetchStoragesAPI(userId, jwtToken);
             setStorages(data);
-        } catch (error: unknown) {
+        } catch (error) {
             console.error(error);
             setError("Error occurred while fetching storages.");
         } finally {
@@ -59,20 +50,10 @@ const StorageList = () => {
     };
 
     const handleStorageCreate = async () => {
-        if (!newStorageName.trim()) return;
+        if (!newStorageName.trim() || !userId || !jwtToken) return;
 
         try {
-            const response = await fetch(`/api/storage/`, {
-                method: "POST",
-                body: JSON.stringify({ name: newStorageName, userId }),
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-            });
-
-            if (!response.ok) throw new Error("Failed to create storage");
-
+            await createStorage(newStorageName, userId, jwtToken);
             setNewStorageName("");
             setCreatorOpen(false);
             fetchStorages();
@@ -82,16 +63,10 @@ const StorageList = () => {
     };
 
     const handleDeleteStorage = async (storageId: number) => {
+        if (!userId || !jwtToken) return;
+
         try {
-            const response = await fetch(`/api/storage/${userId}/${storageId}`, {
-                method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${jwtToken}`,
-                },
-            });
-
-            if (!response.ok) throw new Error("Failed to delete storage");
-
+            await deleteStorage(userId, storageId, jwtToken);
             setStorageToDelete(null);
             fetchStorages();
         } catch (error) {
@@ -110,7 +85,7 @@ const StorageList = () => {
         <Box
             sx={{
                 p: 4,
-                backgroundColor: "#E4E4DE", // Ethereal Ivory
+                backgroundColor: "#E4E4DE",
                 minHeight: "83vh",
                 position: "relative",
             }}
@@ -123,10 +98,10 @@ const StorageList = () => {
                         position: "absolute",
                         top: 16,
                         left: 16,
-                        backgroundColor: "#595f39", // Muted Moss
-                        color: "#E4E4DE",           // Ivory icon
+                        backgroundColor: "#595f39",
+                        color: "#E4E4DE",
                         "&:hover": {
-                            backgroundColor: "#1B1B1B", // Timeless Noir on hover
+                            backgroundColor: "#1B1B1B",
                         },
                     }}
                 >
@@ -139,7 +114,7 @@ const StorageList = () => {
                 fontWeight="bold"
                 mb={3}
                 textAlign="center"
-                color="#1B1B1B" // Timeless Noir
+                color="#1B1B1B"
             >
                 Your Storages
             </Typography>

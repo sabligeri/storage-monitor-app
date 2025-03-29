@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Modal, Box, TextField, Button, Typography, FormControl, InputLabel, Select, MenuItem, Autocomplete } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import { getUserData } from "../../utils/getUserData";
+
+import { fetchStorages } from "../../utils/fetches/StorageService";
+import { createProduct } from "../../utils/fetches/ProductService";
 
 interface Storage {
   id: number;
   name: string;
-  items: { id: number; name: string, quantityType: string }[];
+  items?: { id: number; name: string, quantityType: string }[];
 }
 
 interface SelectedItem {
@@ -28,51 +32,48 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
   const [storageList, setStorageList] = useState<Storage[]>([]);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
 
-  const savedData = localStorage.getItem("jwt-response");
-  const parsedData = savedData ? JSON.parse(savedData) : null;
-  const userId = parsedData?.id;
-  const jwtToken = parsedData?.jwt;
+    const userData = getUserData();
+    const userId = userData?.id;
+    const jwtToken = userData?.jwt;
 
-  useEffect(() => {
-    const fetchStorages = async () => {
+    const hasFetchedRef = useRef(false);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        if (!userId || !jwtToken || hasFetchedRef.current) return;
+  
+        try {
+          const data = await fetchStorages(userId, jwtToken);
+          setStorageList(data);
+          hasFetchedRef.current = true;
+        } catch (error) {
+          console.error("Error fetching storages:", error);
+        }
+      };
+  
+      if (open) fetchData();
+    }, [open, userId, jwtToken]);
+  
+    const handleCreateProduct = async () => {
+      if (!productName || !selectedStorage || selectedItems.length === 0 || !userId || !jwtToken) return;
+  
       try {
-        const response = await fetch(`/api/storage/user/${userId}`, { headers: { Authorization: `Bearer ${jwtToken}` } });
-        if (!response.ok) throw new Error("Failed to fetch storages");
-        const data = await response.json();
-        setStorageList(data);
+        await createProduct(
+          productName,
+          selectedItems.map(item => ({ itemId: item.id, quantity: item.quantity })),
+          userId,
+          jwtToken
+        );
+  
+        setProductName("");
+        setSelectedStorage(null);
+        setSelectedItems([]);
+        fetchProducts();
+        handleClose();
       } catch (error) {
-        console.error("Error fetching storages:", error);
+        console.error("Error creating product:", error);
       }
     };
-
-    if (userId && jwtToken) fetchStorages();
-  }, [userId, jwtToken]);
-
-  const handleCreateProduct = async () => {
-    if (!productName || !selectedStorage || selectedItems.length === 0) return;
-
-    try {
-      const response = await fetch("/api/product/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwtToken}` },
-        body: JSON.stringify({
-          name: productName,
-          items: selectedItems.map((item) => ({ itemId: item.id, quantity: item.quantity })),
-          userId,
-        }),
-      });
-
-      if (!response.ok) throw new Error("Failed to create product");
-
-      setProductName("");
-      setSelectedStorage(null);
-      setSelectedItems([]);
-      fetchProducts();
-      handleClose();
-    } catch (error) {
-      console.error("Error creating product:", error);
-    }
-  };
 
   return (
     <Modal open={open} onClose={handleClose}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../utils/auth";
+import { registerUser } from "../../utils/fetches/auth";
 import {
   Box,
   TextField,
