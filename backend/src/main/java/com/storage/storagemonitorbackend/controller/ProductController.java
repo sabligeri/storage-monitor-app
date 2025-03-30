@@ -28,4 +28,7 @@ public class ProductController {
     public List<ProductDTO> getProductsByUser(@PathVariable Long userId) {
         return productService.getProductsByUser(userId);
     }
+
+    @DeleteMapping("/{productId}")
+    public boolean deleteProduct(@PathVariable Long productId) { return productService.deleteProduct(productId); }
 }

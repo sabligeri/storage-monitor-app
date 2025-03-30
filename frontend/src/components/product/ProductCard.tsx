@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, CardHeader, CardContent, Typography, Box, IconButton, Menu } from "@mui/material";
+import { Card, CardHeader, CardContent, Typography, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface Product {
     id: number;
@@ -11,9 +12,10 @@ interface Product {
 
 interface ProductCardProps {
     product: Product;
+    onRequestDelete: (productId: number, productName: string) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, onRequestDelete }) => {
     const [menuAnchor, setMenuAnchor] = React.useState<null | HTMLElement>(null
     );
     const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -61,7 +63,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
 
                 <Menu anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={handleMenuClose}>
-
+                    <MenuItem
+                        onClick={() => {
+                            handleMenuClose();
+                            onRequestDelete(product.id, product.name);
+                        }}
+                    >
+                        <DeleteIcon sx={{ mr: 1 }} />
+                        Delete
+                    </MenuItem>
                 </Menu>
             </Card>
 
