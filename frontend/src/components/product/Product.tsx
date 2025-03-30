@@ -6,7 +6,8 @@ import ProductCard from "./ProductCard";
 import CreateProductModal from "./CreateProductModal";
 import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
-import { fetchProducts as fetchProductsAPI } from "../../utils/fetches/ProductService";
+import { deleteProduct, fetchProducts as fetchProductsAPI } from "../../utils/fetches/ProductService";
+import DeleteProductModal from "./DeleteProductModal";
 
 interface Product {
   id: number;
@@ -28,6 +29,8 @@ const Product = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [productToDelete, setProductToDelete] = useState<{ id: number; name: string } | null>(null);
+
 
   const userData = getUserData();
   const userId = userData?.id;
@@ -50,6 +53,19 @@ const Product = () => {
       setLoading(false);
     }
   };
+
+  const handleDeleteProduct = async (productId: number) => {
+    if (!jwtToken) return;
+    try {
+      await deleteProduct(productId, jwtToken);
+      setProductToDelete(null);
+      fetchProducts();
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      setError("Failed to delete product.");
+    }
+  };
+
 
   useEffect(() => {
     fetchProducts();
@@ -121,9 +137,21 @@ const Product = () => {
         overflowX: "hidden",
       }}>
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard
+            key={product.id}
+            product={product}
+            onRequestDelete={(id, name) => setProductToDelete({ id, name })}
+          />
         ))}
       </Box>
+      <DeleteProductModal
+        isOpen={!!productToDelete}
+        productName={productToDelete?.name || ""}
+        onClose={() => setProductToDelete(null)}
+        onConfirm={() => {
+          if (productToDelete) handleDeleteProduct(productToDelete.id);
+        }}
+      />
     </Box>
   );
 };

@@ -11,7 +11,7 @@ import java.util.Map;
 @RequestMapping("/api/item")
 public class ItemController {
 
-    private ItemService itemService;
+    private final ItemService itemService;
 
     @Autowired
     public ItemController(ItemService itemService) {
@@ -34,7 +34,7 @@ public class ItemController {
             throw new IllegalArgumentException("Quantity is required for refill.");
         }
 
-        double quantity = ((Number) updates.get("quantity")).doubleValue(); // 🔹 Biztosítjuk, hogy a szám megfelelő formátumú legyen
+        double quantity = ((Number) updates.get("quantity")).doubleValue();  
         return itemService.refillItem(itemId, quantity);
     }
 

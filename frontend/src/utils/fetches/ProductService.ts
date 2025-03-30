@@ -42,3 +42,20 @@ export const createProduct = async (
 
     if (!response.ok) throw new Error("Failed to create product");
 };
+
+export const deleteProduct = async (
+    productId: number,
+    token: string
+  ): Promise<void> => {
+    const response = await fetch(`/api/product/${productId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  
+    if (!response.ok) {
+      throw new Error("Failed to delete product");
+    }
+  };
+  
