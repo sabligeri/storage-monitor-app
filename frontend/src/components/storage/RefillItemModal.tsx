@@ -14,14 +14,14 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({ open, handleClose, ha
         <Modal open={open} onClose={handleClose}>
             <Box
                 sx={{
-                    color: "black",
+                    color: "#2d4739",
                     position: "absolute",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     width: "80%",
                     maxWidth: 400,
-                    bgcolor: "background.paper",
+                    bgcolor: "#f3faf5",
                     p: 4,
                     borderRadius: 2,
                     boxShadow: 24,

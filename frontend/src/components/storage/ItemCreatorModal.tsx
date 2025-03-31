@@ -60,13 +60,13 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
           transform: "translate(-50%, -50%)",
           width: "80%",
           maxWidth: 500,
-          bgcolor: "background.paper",
+          bgcolor: "#f3faf5",
           p: 4,
           borderRadius: 2,
           boxShadow: 24,
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, color: "black" }}>Create Item</Typography>
+        <Typography variant="h6" sx={{ mb: 2, color: "#3a5a40" }}>Create Item</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -117,13 +117,35 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
           </Grid>
         </Grid>
         <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 3 }}>
-          <Button variant="contained" color="primary" onClick={handleCreateItem} sx={{ width: "fit-content" }}>
+          <Button
+            variant="contained"
+            onClick={handleCreateItem}
+            sx={{
+              backgroundColor: "#3a5a40",
+              color: "#fff",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#2d4739",
+              },
+            }}
+          >
             Create
-            <AddIcon />
           </Button>
-          <Button variant="contained" color="primary" onClick={handleClose} sx={{ width: "fit-content" }}>
+
+          <Button
+            variant="outlined"
+            onClick={handleClose}
+            sx={{
+              borderColor: "#3a5a40",
+              color: "#3a5a40",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#e6f2ea",
+                borderColor: "#2d4739",
+              },
+            }}
+          >
             Close
-            <CloseIcon />
           </Button>
         </Box>
       </Box>

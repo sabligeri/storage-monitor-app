@@ -43,7 +43,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onRefill, onDelete }) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 300, backgroundColor: "#decf83", p: 1, minWidth: 300, m: 1, border: 3, borderStyle: "solid", borderColor: "black" }}>
+      <Card sx={{ maxWidth: 300, backgroundColor: "#e6f2ea", p: 1, minWidth: 300, m: 1, border: 3, borderStyle: "solid", borderColor: "#a3c9a8" }}>
         <CardHeader
           sx={{
             minHeight: 60,
