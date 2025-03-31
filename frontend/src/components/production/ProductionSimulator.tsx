@@ -84,7 +84,8 @@ const ProductionSimulator: React.FC = () => {
             border: "1px solid #ccc",
             borderRadius: 2,
             backgroundColor: "#f5f5dc",
-            color: "black"
+            color: "black",
+            mt: "4rem"
         }}>
             <Typography
                 variant="h6"

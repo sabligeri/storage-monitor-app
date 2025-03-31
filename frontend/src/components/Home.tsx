@@ -13,7 +13,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: "beige", color: "black" }}>
+    <Box sx={{ backgroundColor: "beige", color: "black", mt: "4rem" }}>
 
       <Box sx={{ backgroundColor: "beige", py: 5, px: 5, textAlign: "center" }}>
         <Grid container spacing={3} alignItems="center">

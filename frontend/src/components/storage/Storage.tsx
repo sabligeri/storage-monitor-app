@@ -178,10 +178,11 @@ if (loading) {
                 background: `radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
                  linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%)`,
                 width: "100%",
-                height: "calc(89vh)",
+                height: "calc(99vh - 4rem)",
                 overflowY: "scroll",
                 position: "relative",
                 "&::-webkit-scrollbar": { display: "none" },
+                mt: "4rem"
             }}
         >
             <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "rgba(255, 236, 139)", borderRadius: "5px" }}>

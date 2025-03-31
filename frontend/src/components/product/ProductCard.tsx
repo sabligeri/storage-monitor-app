@@ -27,7 +27,23 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onRequestDelete }) =
     };
     return (
         <>
-            <Card sx={{ maxWidth: 300, backgroundColor: "#decf83", p: 1, minWidth: 300, m: 1, border: 3, borderStyle: "solid", borderColor: "black" }}>
+            <Card sx={{
+                maxWidth: 300,
+                minWidth: 300,
+                m: 1,
+                p: 2,
+                border: 2,
+                borderColor: "#B69E88", // taupe-gold
+                borderStyle: "solid",
+                backgroundColor: "#FBEEDB", // champagne
+                color: "#3E3E3E",
+                boxShadow: 3,
+                transition: "transform 0.2s ease",
+                '&:hover': {
+                    transform: "scale(1.015)",
+                    boxShadow: 6,
+                }
+            }}>
                 <CardHeader
                     sx={{
                         minHeight: 60,

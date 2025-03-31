@@ -32,52 +32,64 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
   const [storageList, setStorageList] = useState<Storage[]>([]);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
 
-    const userData = getUserData();
-    const userId = userData?.id;
-    const jwtToken = userData?.jwt;
+  const userData = getUserData();
+  const userId = userData?.id;
+  const jwtToken = userData?.jwt;
 
-    const hasFetchedRef = useRef(false);
+  const hasFetchedRef = useRef(false);
 
-    useEffect(() => {
-      const fetchData = async () => {
-        if (!userId || !jwtToken || hasFetchedRef.current) return;
-  
-        try {
-          const data = await fetchStorages(userId, jwtToken);
-          setStorageList(data);
-          hasFetchedRef.current = true;
-        } catch (error) {
-          console.error("Error fetching storages:", error);
-        }
-      };
-  
-      if (open) fetchData();
-    }, [open, userId, jwtToken]);
-  
-    const handleCreateProduct = async () => {
-      if (!productName || !selectedStorage || selectedItems.length === 0 || !userId || !jwtToken) return;
-  
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!userId || !jwtToken || hasFetchedRef.current) return;
+
       try {
-        await createProduct(
-          productName,
-          selectedItems.map(item => ({ itemId: item.id, quantity: item.quantity })),
-          userId,
-          jwtToken
-        );
-  
-        setProductName("");
-        setSelectedStorage(null);
-        setSelectedItems([]);
-        fetchProducts();
-        handleClose();
+        const data = await fetchStorages(userId, jwtToken);
+        setStorageList(data);
+        hasFetchedRef.current = true;
       } catch (error) {
-        console.error("Error creating product:", error);
+        console.error("Error fetching storages:", error);
       }
     };
 
+    if (open) fetchData();
+  }, [open, userId, jwtToken]);
+
+  const handleCreateProduct = async () => {
+    if (!productName || !selectedStorage || selectedItems.length === 0 || !userId || !jwtToken) return;
+
+    try {
+      await createProduct(
+        productName,
+        selectedItems.map(item => ({ itemId: item.id, quantity: item.quantity })),
+        userId,
+        jwtToken
+      );
+
+      setProductName("");
+      setSelectedStorage(null);
+      setSelectedItems([]);
+      fetchProducts();
+      handleClose();
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
+  };
+
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "80%", maxWidth: 500, bgcolor: "background.paper", p: 4, borderRadius: 2, boxShadow: 24 }}>
+      <Box sx={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "80%",
+        maxWidth: 500,
+        bgcolor: "#FFF8F3", // blush
+        p: 4,
+        borderRadius: 2,
+        boxShadow: 24,
+        border: "2px solid #B69E88"
+      }}>
         <Typography variant="h6" sx={{ mb: 2, color: "black" }}>Create Product</Typography>
         <TextField fullWidth label="Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} sx={{ mb: 2 }} />
 
@@ -135,10 +147,44 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({ open, handleClo
           </Box>
         )}
 
-        <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 3 }}>
-          <Button variant="contained" color="primary" onClick={handleCreateProduct}><AddIcon /> Create</Button>
-          <Button variant="contained" color="primary" onClick={handleClose}><CloseIcon /> Close</Button>
+        <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2, mt: 4 }}>
+          <Button
+            variant="contained"
+            onClick={handleCreateProduct}
+            sx={{
+              backgroundColor: "#B69E88", // taupe gold
+              color: "#FFF8F3",
+              fontWeight: "bold",
+              px: 3,
+              "&:hover": {
+                backgroundColor: "#a28b74"
+              }
+            }}
+            startIcon={<AddIcon />}
+          >
+            Create
+          </Button>
+
+          <Button
+            variant="outlined"
+            onClick={handleClose}
+            sx={{
+              borderColor: "#B69E88",
+              color: "#B69E88",
+              fontWeight: "bold",
+              px: 3,
+              "&:hover": {
+                backgroundColor: "#f7efe7",
+                borderColor: "#a28b74",
+                color: "#a28b74"
+              }
+            }}
+            startIcon={<CloseIcon />}
+          >
+            Close
+          </Button>
         </Box>
+
       </Box>
     </Modal>
   );

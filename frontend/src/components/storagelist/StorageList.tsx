@@ -88,6 +88,7 @@ const StorageList = () => {
                 backgroundColor: "#E4E4DE",
                 minHeight: "83vh",
                 position: "relative",
+                mt: "4rem",
             }}
         >
             <Tooltip title="Add New Storage">
