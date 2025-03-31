@@ -156,7 +156,7 @@ const Storage = () => {
     }, [userId, jwtToken]);
 
 
-if (loading) {
+    if (loading) {
         return (
             <LoadingScreen />
         );
@@ -164,7 +164,7 @@ if (loading) {
 
     if (error) {
         return (
-           <ErrorScreen error={error} />
+            <ErrorScreen error={error} />
         );
     }
 
@@ -175,16 +175,16 @@ if (loading) {
                 margin: "0 auto",
                 border: "1px solid #ccc",
                 borderRadius: "8px",
-                background: `radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
-                 linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%)`,
+                background: `linear-gradient(135deg, #F0EFEB 0%, #D4D4D4 100%)`,
                 width: "100%",
-                height: "calc(89vh)",
+                height: "calc(99vh - 4rem)",
                 overflowY: "scroll",
                 position: "relative",
                 "&::-webkit-scrollbar": { display: "none" },
+                mt: "4rem"
             }}
         >
-            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "rgba(255, 236, 139)", borderRadius: "5px" }}>
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "#B7B7A4", borderRadius: "5px" }}>
                 <Toolbar>
                     <IconButton
                         sx={{ color: "black", fontWeight: "medium" }}
@@ -202,8 +202,12 @@ if (loading) {
                 open={drawerOpen}
                 onClose={() => setDrawerOpen(false)}
                 sx={{
-                    "& .MuiDrawer-paper":
-                        { width: "60vh", borderTop: "5px solid black", }
+                    "& .MuiDrawer-paper": {
+                        width: "60vh",
+                        borderTop: "5px solid #283618",
+                        backgroundColor: "#F0EFEB",
+                        paddingTop: 2,
+                    }
                 }}>
                 <List>
                     <ListItem >
@@ -258,8 +262,8 @@ if (loading) {
                     },
                     gap: "2rem",
                     padding: "2rem",
-                    justifyItems: "center", 
-                    justifyContent: "center", 
+                    justifyItems: "center",
+                    justifyContent: "center",
                     backgroundColor: "inherit",
                     overflowX: "hidden",
                 }}

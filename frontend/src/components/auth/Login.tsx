@@ -57,7 +57,7 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              sx={{ mb: 2, input: { color: "#fff" }, label: { color: "#aaa" } }}
+              sx={{ mb: 2, input: { color: "white" }, label: { color: "white" } }}
             />
             <TextField
               label="Password"
@@ -67,7 +67,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              sx={{ mb: 2, input: { color: "#fff" }, label: { color: "#aaa" } }}
+              sx={{ mb: 2, input: { color: "white" }, label: { color: "white" } }}
             />
             {error && <Typography color="error">{error}</Typography>}
             <Button type="submit" variant="contained" color="primary" fullWidth>

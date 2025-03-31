@@ -14,14 +14,14 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({ open, handleClose, ha
         <Modal open={open} onClose={handleClose}>
             <Box
                 sx={{
-                    color: "black",
+                    color: "#283618",
                     position: "absolute",
                     top: "50%",
                     left: "50%",
                     transform: "translate(-50%, -50%)",
                     width: "80%",
                     maxWidth: 400,
-                    bgcolor: "background.paper",
+                    bgcolor: "#F0EFEB",
                     p: 4,
                     borderRadius: 2,
                     boxShadow: 24,
@@ -41,11 +41,11 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({ open, handleClose, ha
                         variant="outlined"
                         sx={{
                             width: "fit-content",
-                            borderColor: "green",
-                            color: "green",
+                            borderColor: "#283618",
+                            color: "#283618",
                             "&:hover": {
-                                backgroundColor: "green",
-                                color: "white",
+                                backgroundColor: "#283618",
+                                color: "#F0EFEB",
                             },
                         }}
                         onClick={() => handleRefill(quantity)}
@@ -56,11 +56,10 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({ open, handleClose, ha
                         variant="outlined"
                         sx={{
                             width: "fit-content",
-                            borderColor: "red",
-                            color: "red",
+                            borderColor: "#B7B7A4",
+                            color: "#283618",
                             "&:hover": {
-                                backgroundColor: "red",
-                                color: "white",
+                                backgroundColor: "#B7B7A4",
                             },
                         }}
                         onClick={handleClose}

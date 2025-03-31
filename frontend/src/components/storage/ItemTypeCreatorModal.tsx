@@ -34,14 +34,14 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
           transform: "translate(-50%, -50%)",
           width: "80%",
           maxWidth: 400,
-          bgcolor: "background.paper",
+          bgcolor: "#f3faf5",
           p: 4,
           borderRadius: 2,
           boxShadow: 24,
           textAlign: "center",
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, color: "black" }}>Create Item Type</Typography>
+        <Typography variant="h6" sx={{ mb: 2, color: "#3a5a40" }}>Create Item Type</Typography>
         <TextField
           fullWidth
           label="Item Type Name"
@@ -49,13 +49,37 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
           onChange={(e) => setNewItemTypeName(e.target.value)}
         />
         <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 3 }}>
-          <Button variant="contained" color="primary" onClick={handleCreateItemType} sx={{ width: "fit-content" }}>
+          <Button
+            onClick={handleCreateItemType}
+            variant="contained"
+            sx={{
+              backgroundColor: "#3a5a40",
+              color: "#fff",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#2d4739",
+              },
+            }}
+          >
             Create
-            <AddIcon />
+            <AddIcon sx={{ ml: 1 }} />
           </Button>
-          <Button variant="contained" color="primary" onClick={handleClose} sx={{ width: "fit-content" }}>
+
+          <Button
+            onClick={handleClose}
+            variant="outlined"
+            sx={{
+              borderColor: "#3a5a40",
+              color: "#3a5a40",
+              fontWeight: "bold",
+              "&:hover": {
+                backgroundColor: "#e6f2ea",
+                borderColor: "#2d4739",
+              },
+            }}
+          >
             Close
-            <CloseIcon />
+            <CloseIcon sx={{ ml: 1 }} />
           </Button>
         </Box>
       </Box>

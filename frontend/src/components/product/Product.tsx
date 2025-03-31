@@ -91,15 +91,15 @@ const Product = () => {
       margin: "0 auto",
       border: "1px solid #ccc",
       borderRadius: "8px",
-      background: `radial-gradient(circle at top, rgba(255, 236, 139, 0.8) 20%, rgba(219, 182, 61, 0.9) 40%),
-       linear-gradient(to bottom, rgba(219, 182, 61, 1) 30%, rgba(135, 206, 235, 1) 100%)`,
-      width: "95%",
-      height: "calc(89vh)",
+      background: `#FFF8F3`,
+      width: "99.8%",
+      height: "calc(99vh - 4rem)",
       overflowY: "scroll",
       position: "relative",
       "&::-webkit-scrollbar": { display: "none" },
+      mt: "4rem"
     }}>
-      <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "rgba(255, 236, 139)", borderRadius: "5px" }}>
+      <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "#FBEEDB", borderRadius: "5px" }}>
         <Toolbar>
           <IconButton sx={{ color: "black", fontWeight: "medium" }} onClick={() => setDrawerOpen(true)}>
             Options <ArrowRightIcon />
@@ -107,7 +107,18 @@ const Product = () => {
         </Toolbar>
       </AppBar>
 
-      <Drawer anchor="left" open={drawerOpen} onClose={() => setDrawerOpen(false)} sx={{ "& .MuiDrawer-paper": { width: "60vh", borderTop: "5px solid black" } }}>
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: "60vh",
+            borderTop: "5px solid #B69E88",
+          backgroundColor: "#FFF8F3",
+          },
+          
+        }}>
         <List>
           <ListItem>
             <ListItemButton onClick={() => { setOpenCreateProduct(true); setDrawerOpen(false); }}>

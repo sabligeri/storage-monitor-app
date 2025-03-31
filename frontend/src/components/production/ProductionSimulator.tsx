@@ -77,69 +77,84 @@ const ProductionSimulator: React.FC = () => {
     }
 
     return (
-        <Box sx={{
-            maxWidth: 500,
-            margin: "0 auto",
-            p: 3,
-            border: "1px solid #ccc",
-            borderRadius: 2,
-            backgroundColor: "#f5f5dc",
-            color: "black"
-        }}>
-            <Typography
-                variant="h6"
-                sx={{ mb: 2, fontWeight: "bold" }}
+        <Box
+            sx={{
+                minHeight: "calc(100vh - 4rem)",
+                background: "#F5F5DC", 
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                pt: "4rem", 
+            }}
+        >
+            <Box
+                sx={{
+                    maxWidth: 500,
+                    width: "90%",
+                    p: 4,
+                    borderRadius: 3,
+                    boxShadow: 4,
+                    background: "#ffffffee",
+                    border: "2px solid #654321",
+                    backdropFilter: "blur(6px)",
+                }}
             >
-                Simulate Production
-            </Typography>
-
-            <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel>Select Product</InputLabel>
-                <Select
-                    value={selectedProduct || ""}
-                    onChange={(e) => {
-                        setSelectedProduct(Number(e.target.value));
-                    }}
-
-                >
-                    {products.map((product) => (
-                        <MenuItem key={product.id} value={product.id}>
-                            {product.name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-
-            <TextField
-                fullWidth
-                label="Quantity"
-                type="number"
-                value={quantity}
-                onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-                sx={{ mb: 2 }}
-            />
-
-            <Button
-                variant="contained"
-                color="primary"
-                fullWidth
-                onClick={handleSimulateProduction}
-            >
-                Simulate Production
-            </Button>
-
-            {resultMessage && (
-                <Typography
-                    variant="body1"
-                    sx={{
-                        mt: 2,
-                        fontWeight: "bold",
-                        color: resultMessage.includes("Error") ? "red" : "green"
-                    }}
-                >
-                    {resultMessage}
+                <Typography variant="h5" fontWeight="bold" sx={{ mb: 3, color: "black" }}>
+                    Simulate Production
                 </Typography>
-            )}
+
+                <FormControl fullWidth sx={{ mb: 2 }}>
+                    <InputLabel>Select Product</InputLabel>
+                    <Select
+                        value={selectedProduct || ""}
+                        onChange={(e) => setSelectedProduct(Number(e.target.value))}
+                    >
+                        {products.map((product) => (
+                            <MenuItem key={product.id} value={product.id}>
+                                {product.name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
+                <TextField
+                    fullWidth
+                    label="Quantity"
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+                    sx={{ mb: 2 }}
+                />
+
+                <Button
+                    variant="contained"
+                    fullWidth
+                    onClick={handleSimulateProduction}
+                    sx={{
+                        background: "linear-gradient(to right,rgb(172, 135, 79),rgb(149, 106, 33))",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        "&:hover": {
+                            background: "linear-gradient(to right, #4e5d84, #3a4663)",
+                        },
+                    }}
+                >
+                    Simulate Production
+                </Button>
+
+                {resultMessage && (
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            mt: 2,
+                            fontWeight: "bold",
+                            color: resultMessage.includes("Error") ? "red" : "green",
+                        }}
+                    >
+                        {resultMessage}
+                    </Typography>
+                )}
+            </Box>
         </Box>
     );
 };

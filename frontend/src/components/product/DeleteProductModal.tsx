@@ -14,13 +14,15 @@ const DeleteProductModal: React.FC<DeleteProductModalProps> = ({ isOpen, onClose
       <Box
         sx={{
           p: 4,
-          bgcolor: "background.paper",
+          bgcolor: "#FBEEDB", // champagne
           borderRadius: 2,
           width: "90%",
           maxWidth: 400,
           mx: "auto",
           mt: "25vh",
           textAlign: "center",
+          border: "2px solid #B69E88",
+          color: "#1B1B1B"
         }}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>

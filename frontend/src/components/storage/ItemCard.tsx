@@ -43,7 +43,15 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onRefill, onDelete }) => {
 
   return (
     <>
-      <Card sx={{ maxWidth: 300, backgroundColor: "#decf83", p: 1, minWidth: 300, m: 1, border: 3, borderStyle: "solid", borderColor: "black" }}>
+      <Card sx={{
+        maxWidth: 300,
+        p: 1,
+        minWidth: 300,
+        m: 1, border: 3,
+        borderStyle: "solid",
+        backgroundColor: "#F0EFEB",
+        borderColor: "#B7B7A4",
+      }}>
         <CardHeader
           sx={{
             minHeight: 60,
@@ -52,7 +60,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, onRefill, onDelete }) => {
             justifyContent: "space-between",
           }}
           title={
-            <Box sx={{ fontWeight: "bold", textAlign: "left", overflow: "auto", whiteSpace: "break-word", flexGrow: 1, maxWidth: "80%", maxHeight: 40, "&::-webkit-scrollbar": { display: "none" },}}>
+            <Box sx={{ fontWeight: "bold", textAlign: "left", overflow: "auto", whiteSpace: "break-word", flexGrow: 1, maxWidth: "80%", maxHeight: 40, "&::-webkit-scrollbar": { display: "none" }, }}>
               <Typography variant="h6">{item.name}</Typography>
             </Box>
           }
