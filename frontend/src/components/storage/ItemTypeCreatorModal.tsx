@@ -50,7 +50,7 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
         />
         <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 3 }}>
           <Button
-          onClick={handleCreateItemType}
+            onClick={handleCreateItemType}
             variant="contained"
             sx={{
               backgroundColor: "#3a5a40",
@@ -62,10 +62,11 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
             }}
           >
             Create
+            <AddIcon sx={{ ml: 1 }} />
           </Button>
 
           <Button
-          onClick={handleClose}
+            onClick={handleClose}
             variant="outlined"
             sx={{
               borderColor: "#3a5a40",
@@ -78,6 +79,7 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
             }}
           >
             Close
+            <CloseIcon sx={{ ml: 1 }} />
           </Button>
         </Box>
       </Box>

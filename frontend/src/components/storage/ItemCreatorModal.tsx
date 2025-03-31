@@ -60,7 +60,7 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
           transform: "translate(-50%, -50%)",
           width: "80%",
           maxWidth: 500,
-          bgcolor: "#f3faf5",
+          bgcolor: "#F0EFEB",
           p: 4,
           borderRadius: 2,
           boxShadow: 24,
@@ -121,31 +121,32 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
             variant="contained"
             onClick={handleCreateItem}
             sx={{
-              backgroundColor: "#3a5a40",
+              backgroundColor: "#283618",
               color: "#fff",
               fontWeight: "bold",
               "&:hover": {
-                backgroundColor: "#2d4739",
+                backgroundColor: "#1e2914",
               },
             }}
           >
             Create
+            <AddIcon sx={{ ml: 1 }} />
           </Button>
 
           <Button
             variant="outlined"
             onClick={handleClose}
             sx={{
-              borderColor: "#3a5a40",
-              color: "#3a5a40",
+              borderColor: "#283618",
+              color: "#283618",
               fontWeight: "bold",
               "&:hover": {
-                backgroundColor: "#e6f2ea",
-                borderColor: "#2d4739",
+                backgroundColor: "#D4D4D4",
               },
             }}
           >
             Close
+            <CloseIcon sx={{ ml: 1 }} />
           </Button>
         </Box>
       </Box>

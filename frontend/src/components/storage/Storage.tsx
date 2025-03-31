@@ -175,7 +175,7 @@ const Storage = () => {
                 margin: "0 auto",
                 border: "1px solid #ccc",
                 borderRadius: "8px",
-                background: `linear-gradient(135deg, #eafaf1 0%, #d2e4d8 100%)`,
+                background: `linear-gradient(135deg, #F0EFEB 0%, #D4D4D4 100%)`,
                 width: "100%",
                 height: "calc(99vh - 4rem)",
                 overflowY: "scroll",
@@ -184,7 +184,7 @@ const Storage = () => {
                 mt: "4rem"
             }}
         >
-            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "#b8d8ba", borderRadius: "5px" }}>
+            <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "#B7B7A4", borderRadius: "5px" }}>
                 <Toolbar>
                     <IconButton
                         sx={{ color: "black", fontWeight: "medium" }}
@@ -204,8 +204,8 @@ const Storage = () => {
                 sx={{
                     "& .MuiDrawer-paper": {
                         width: "60vh",
-                        borderTop: "5px solid #3a5a40",        
-                        backgroundColor: "#e8f5e9",            
+                        borderTop: "5px solid #283618",
+                        backgroundColor: "#F0EFEB",
                         paddingTop: 2,
                     }
                 }}>
