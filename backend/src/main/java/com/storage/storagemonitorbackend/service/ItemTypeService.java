@@ -15,12 +15,10 @@ import java.util.Optional;
 @Service
 public class ItemTypeService {
 
-    @Autowired
     private final ItemTypeRepository itemTypeRepository;
-
-    @Autowired
     private final UserRepository userRepository;
 
+    @Autowired
     public ItemTypeService(ItemTypeRepository itemTypeRepository, UserRepository userRepository) {
         this.itemTypeRepository = itemTypeRepository;
         this.userRepository = userRepository;
