@@ -19,13 +19,14 @@ export const loginUser = async (credentials: UserCredentials): Promise<AuthRespo
         body: JSON.stringify(credentials)
     })
 
-    const data: AuthResponse = await response.json();
+    const data = await response.json().catch(() => ({}));
 
-    if(response.ok) {
-        localStorage.setItem('jwt-response', JSON.stringify(data)); 
+    if (response.ok) {
+        localStorage.setItem('jwt-response', JSON.stringify(data));
         return data;
     } else {
-        throw new Error('Login failed');
+        const errorMessage = data?.message || 'Invalid username or password';
+        throw new Error(errorMessage);
     }
 };
 
@@ -38,12 +39,13 @@ export const registerUser = async (credentials: UserCredentials): Promise<AuthRe
         body: JSON.stringify(credentials)
     })
 
-    const data: AuthResponse = await response.json();
+    const data = await response.json();
 
-    if(response.ok) {
-        localStorage.setItem('jwt-response', JSON.stringify(data)); 
+    if (response.ok) {
+        localStorage.setItem('jwt-response', JSON.stringify(data));
         return data;
     } else {
-        throw new Error('Registration failed');
+        const errorMessage = data?.message || 'Registration failed';
+        throw new Error(errorMessage);
     }
 };
