@@ -75,4 +75,8 @@ public class UserEntity {
     public void setItemTypes(Set<ItemType> itemTypes) {
         this.itemTypes = itemTypes;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
