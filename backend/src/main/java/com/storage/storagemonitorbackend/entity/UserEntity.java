@@ -79,4 +79,12 @@ public class UserEntity {
     public void setId(long id) {
         this.id = id;
     }
+
+    public Set<Storage> getStorages() {
+        return storages;
+    }
+
+    public void setStorages(Set<Storage> storages) {
+        this.storages = storages;
+    }
 }
