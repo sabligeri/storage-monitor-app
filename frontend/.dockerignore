@@ -1,0 +1,8 @@
+node_modules
+dist
+*.log
+.vite
+.idea
+.env
+.env.*.local
+*.iml
