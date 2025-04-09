@@ -1,9 +1,13 @@
 import { Box, Typography, Grid, Card, CardContent, CardMedia, Button } from "@mui/material";
 import { useState, useEffect } from "react";
-import { getUserData } from "../utils/getUserData";
+import { getUserData } from "../../utils/getUserData";
+import { useThemeMode } from "../../context/ThemeContext"; // 🌗 context
+import { light, dark } from "./theme"; // 🎨 local theme fájl
 
 const Home = () => {
   const [username, setUsername] = useState("Guest");
+  const { isDark } = useThemeMode(); // 🌙
+  const theme = isDark ? dark : light;
 
   useEffect(() => {
     const userData = getUserData();
@@ -13,14 +17,15 @@ const Home = () => {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: "beige", color: "black", mt: "4rem" }}>
-
-      <Box sx={{ backgroundColor: "beige", py: 5, px: 5, textAlign: "center" }}>
+    <Box sx={{ backgroundColor: theme.section1Background, color: theme.text, mt: "4rem" }}>
+      <Box sx={{ backgroundColor: theme.section1Background, py: 5, px: 5, textAlign: "center" }}>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={6}>
             <Box sx={{ px: 5 }}>
               <Typography variant="h2" fontWeight="bold">Storage Monitor</Typography>
-              <Typography variant="h6" sx={{color: "grey"}}>Welcome, {username}! We have been expecting you!</Typography>
+              <Typography variant="h6" sx={{ color: theme.subtitle }}>
+                Welcome, {username}! We have been expecting you!
+              </Typography>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -33,7 +38,7 @@ const Home = () => {
         </Grid>
       </Box>
 
-      <Box sx={{ backgroundColor: "white", px: 5, color: "black", py: 5 }}>
+      <Box sx={{ backgroundColor: theme.section2Background, px: 5, color: theme.text, py: 5 }}>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={6}>
             <img
@@ -51,13 +56,12 @@ const Home = () => {
                 create and use item types to filter the items. You can also simulate the production of products and see if
                 you have enough stock to make them.
               </Typography>
-
             </Box>
           </Grid>
         </Grid>
       </Box>
 
-      <Box sx={{ py: 6, px: 4, color: "black" }}>
+      <Box sx={{ py: 6, px: 4, color: theme.text }}>
         <Typography variant="h4" sx={{ textAlign: "center", fontWeight: "bold", mb: 4 }}>
           Our Services
         </Typography>
@@ -107,8 +111,7 @@ const Home = () => {
         </Grid>
       </Box>
 
-      {/* Footer */}
-      <Box sx={{ textAlign: "center",color: "black"}}>
+      <Box sx={{ textAlign: "center", color: theme.text }}>
         <Typography variant="body2">© Storage Monitor, Inc. All rights reserved.</Typography>
       </Box>
     </Box>

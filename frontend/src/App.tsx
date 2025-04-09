@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import Home from './components/Home';
+import Home from './components/home/Home';
 import PrivateRoute from './components/PrivateRoute';
 import './App.css';
 import NavBar from './components/navbar/NavBar';

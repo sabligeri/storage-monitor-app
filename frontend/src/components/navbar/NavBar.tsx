@@ -1,13 +1,24 @@
-import { AppBar, Toolbar, IconButton, Box, Button, Tooltip } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Box,
+  Button,
+  Tooltip,
+} from "@mui/material";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import WarehouseIcon from "@mui/icons-material/Warehouse";
 import InventoryIcon from "@mui/icons-material/Inventory2";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import DarkModeIcon from "@mui/icons-material/DarkMode";   // 🌙
+import LightModeIcon from "@mui/icons-material/LightMode"; // ☀️
+import { useThemeMode } from "../../context/ThemeContext"; // 🌗 custom context
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const { isDark, toggleTheme } = useThemeMode(); // 👈 Theme hook
 
   const handleLogout = () => {
     localStorage.removeItem("jwt-response");
@@ -18,48 +29,68 @@ const NavBar = () => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "#1B1B1B", 
+        backgroundColor: "#1B1B1B", // 🔒 Navbar színe nem változik
         boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
         zIndex: 1200,
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        {/* Navigációs gombok bal oldalt */}
         <Box sx={{ display: "flex", gap: 4 }}>
           <Tooltip title="Home">
             <Button
               component={RouterLink}
               to="/home"
-              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              sx={{
+                color: "#E4E4DE",
+                fontWeight: "bold",
+                textTransform: "none",
+              }}
               startIcon={<HomeIcon />}
             >
               Home
             </Button>
           </Tooltip>
+
           <Tooltip title="Storage">
             <Button
               component={RouterLink}
               to="/storagelist"
-              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              sx={{
+                color: "#E4E4DE",
+                fontWeight: "bold",
+                textTransform: "none",
+              }}
               startIcon={<WarehouseIcon />}
             >
               Storage
             </Button>
           </Tooltip>
+
           <Tooltip title="Products">
             <Button
               component={RouterLink}
               to="/products"
-              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              sx={{
+                color: "#E4E4DE",
+                fontWeight: "bold",
+                textTransform: "none",
+              }}
               startIcon={<InventoryIcon />}
             >
               Product
             </Button>
           </Tooltip>
+
           <Tooltip title="Production">
             <Button
               component={RouterLink}
               to="/production"
-              sx={{ color: "#E4E4DE", fontWeight: "bold", textTransform: "none" }}
+              sx={{
+                color: "#E4E4DE",
+                fontWeight: "bold",
+                textTransform: "none",
+              }}
               startIcon={<PlayCircleIcon />}
             >
               Production
@@ -67,7 +98,16 @@ const NavBar = () => {
           </Tooltip>
         </Box>
 
-        <Box sx={{ ml: "auto" }}>
+        {/* Jobb oldali gombok: téma és logout */}
+        <Box sx={{ display: "flex", gap: 2 }}>
+          {/* 🌗 Téma váltó gomb */}
+          <Tooltip title="Toggle Theme">
+            <IconButton onClick={toggleTheme} sx={{ color: "#f6f202" }}>
+              {isDark ? <LightModeIcon /> : <DarkModeIcon />}
+            </IconButton>
+          </Tooltip>
+
+          {/* 🚪 Kijelentkezés gomb */}
           <Tooltip title="Logout">
             <IconButton onClick={handleLogout} sx={{ color: "#f6f202" }}>
               <LogoutIcon />
