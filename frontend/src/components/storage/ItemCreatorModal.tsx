@@ -12,7 +12,9 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
+import { useThemeMode } from "../../context/ThemeContext";
+import { light, dark } from "./theme";
 
 interface ItemType {
   id: number;
@@ -50,6 +52,9 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
   quantityTypes,
   handleCreateItem,
 }) => {
+  const { isDark } = useThemeMode();
+  const theme = isDark ? dark : light;
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -60,13 +65,16 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
           transform: "translate(-50%, -50%)",
           width: "80%",
           maxWidth: 500,
-          bgcolor: "#F0EFEB",
+          bgcolor: theme.modalBackground,
+          color: theme.cardText,
           p: 4,
           borderRadius: 2,
           boxShadow: 24,
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, color: "#3a5a40" }}>Create Item</Typography>
+        <Typography variant="h6" sx={{ mb: 2, color: theme.cardText }}>
+          Create Item
+        </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
@@ -74,14 +82,21 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
               label="Item Name"
               value={newItemName}
               onChange={(e) => setNewItemName(e.target.value)}
+              InputLabelProps={{ style: { color: theme.cardText } }}
+              InputProps={{
+                style: { color: theme.cardText },
+              }}
             />
           </Grid>
           <Grid item xs={6}>
             <FormControl fullWidth>
-              <InputLabel>Quantity Type</InputLabel>
+              <InputLabel sx={{ color: theme.cardText }}>Quantity Type</InputLabel>
               <Select
                 value={newItemQuantityType}
                 onChange={(e) => setNewItemQuantityType(e.target.value)}
+                sx={{
+                  color: theme.cardText,
+                }}
               >
                 {quantityTypes.map((type) => (
                   <MenuItem key={type} value={type}>
@@ -98,14 +113,21 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
               label="Quantity"
               value={newItemQuantity}
               onChange={(e) => setNewItemQuantity(Number(e.target.value))}
+              InputLabelProps={{ style: { color: theme.cardText } }}
+              InputProps={{
+                style: { color: theme.cardText },
+              }}
             />
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth>
-              <InputLabel>Item Type</InputLabel>
+              <InputLabel sx={{ color: theme.cardText }}>Item Type</InputLabel>
               <Select
                 value={newItemTypeId}
                 onChange={(e) => setNewItemTypeId(Number(e.target.value))}
+                sx={{
+                  color: theme.cardText,
+                }}
               >
                 {itemTypes.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
@@ -121,11 +143,11 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
             variant="contained"
             onClick={handleCreateItem}
             sx={{
-              backgroundColor: "#283618",
-              color: "#fff",
+              backgroundColor: theme.buttonBackground,
+              color: theme.buttonText,
               fontWeight: "bold",
               "&:hover": {
-                backgroundColor: "#1e2914",
+                backgroundColor: theme.buttonHoverBackground,
               },
             }}
           >
@@ -137,11 +159,11 @@ const ItemCreatorModal: React.FC<ItemCreatorProps> = ({
             variant="outlined"
             onClick={handleClose}
             sx={{
-              borderColor: "#283618",
-              color: "#283618",
+              borderColor: theme.buttonBackground,
+              color: theme.buttonBackground,
               fontWeight: "bold",
               "&:hover": {
-                backgroundColor: "#D4D4D4",
+                backgroundColor: theme.drawerBackground,
               },
             }}
           >

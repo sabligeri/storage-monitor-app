@@ -8,6 +8,8 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import { useThemeMode } from "../../context/ThemeContext";
+import { light, dark } from "./theme";
 
 interface ItemTypeCreatorProps {
   open: boolean;
@@ -24,6 +26,9 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
   setNewItemTypeName,
   handleCreateItemType,
 }) => {
+  const { isDark } = useThemeMode();
+  const theme = isDark ? dark : light;
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -34,30 +39,35 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
           transform: "translate(-50%, -50%)",
           width: "80%",
           maxWidth: 400,
-          bgcolor: "#f3faf5",
+          bgcolor: theme.modalBackground,
           p: 4,
           borderRadius: 2,
           boxShadow: 24,
           textAlign: "center",
+          color: theme.cardText,
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, color: "#3a5a40" }}>Create Item Type</Typography>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Create Item Type
+        </Typography>
         <TextField
           fullWidth
           label="Item Type Name"
           value={newItemTypeName}
           onChange={(e) => setNewItemTypeName(e.target.value)}
+          InputLabelProps={{ style: { color: theme.cardText } }}
+          InputProps={{ style: { color: theme.cardText } }}
         />
         <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 3 }}>
           <Button
             onClick={handleCreateItemType}
             variant="contained"
             sx={{
-              backgroundColor: "#3a5a40",
-              color: "#fff",
+              backgroundColor: theme.buttonBackground,
+              color: theme.buttonText,
               fontWeight: "bold",
               "&:hover": {
-                backgroundColor: "#2d4739",
+                backgroundColor: theme.buttonHoverBackground,
               },
             }}
           >
@@ -69,12 +79,11 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
             onClick={handleClose}
             variant="outlined"
             sx={{
-              borderColor: "#3a5a40",
-              color: "#3a5a40",
+              borderColor: theme.buttonBackground,
+              color: theme.buttonBackground,
               fontWeight: "bold",
               "&:hover": {
-                backgroundColor: "#e6f2ea",
-                borderColor: "#2d4739",
+                backgroundColor: theme.buttonHoverBackground || "#eaeaea",
               },
             }}
           >
