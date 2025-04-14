@@ -177,7 +177,7 @@ const Storage = () => {
                 borderRadius: "8px",
                 background: `linear-gradient(135deg, #F0EFEB 0%, #D4D4D4 100%)`,
                 width: "100%",
-                height: "calc(99vh - 4rem)",
+                height: "calc(100vh - 4rem)",
                 overflowY: "scroll",
                 position: "relative",
                 "&::-webkit-scrollbar": { display: "none" },
@@ -205,7 +205,7 @@ const Storage = () => {
                     "& .MuiDrawer-paper": {
                         width: "60vh",
                         borderTop: "5px solid #283618",
-                        backgroundColor: "#F0EFEB",
+                        backgroundColor: "#F0EFEB", 
                         paddingTop: 2,
                     }
                 }}>

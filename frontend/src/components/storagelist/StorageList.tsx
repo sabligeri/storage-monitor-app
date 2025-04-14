@@ -95,7 +95,7 @@ const StorageList = () => {
       sx={{
         p: 4,
         backgroundColor: theme.pageBackground,
-        minHeight: "83vh",
+        height: "calc(100vh - 4rem)",
         position: "relative",
         mt: "4rem",
       }}

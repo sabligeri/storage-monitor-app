@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
+import {
+    Box,
+    TextField,
+    Button,
+    Typography,
+    MenuItem,
+    Select,
+    FormControl,
+    InputLabel,
+} from "@mui/material";
 import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
 import { fetchProducts } from "../../utils/fetches/ProductService";
 import { simulateProduction } from "../../utils/fetches/ProductionService";
+import { useThemeMode } from "../../context/ThemeContext";
+import { light, dark } from "./theme";
 
 interface Product {
     id: number;
@@ -18,10 +29,12 @@ const ProductionSimulator: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const { isDark } = useThemeMode();
+    const theme = isDark ? dark : light;
+
     const userData = getUserData();
     const userId = userData?.id;
     const jwtToken = userData?.jwt;
-
 
     useEffect(() => {
         if (!jwtToken || !userId) {
@@ -63,28 +76,24 @@ const ProductionSimulator: React.FC = () => {
         }
     };
 
-
-    if (loading) {
-        return (
-            <LoadingScreen />
-        );
-    }
-
-    if (error) {
-        return (
-            <ErrorScreen error={error} />
-        );
-    }
+    if (loading) return <LoadingScreen />;
+    if (error) return <ErrorScreen error={error} />;
 
     return (
         <Box
             sx={{
-                minHeight: "calc(100vh - 4rem)",
-                background: "#F5F5DC", 
+                margin: "0 auto",
+                border: "1px solid #ccc",
+                borderRadius: "8px",
+                background: theme.background,
+                width: "100%",
+                height: "calc(100vh - 4rem)",
+                overflowY: "scroll",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                pt: "4rem", 
+                "&::-webkit-scrollbar": { display: "none" },
+                mt: "4rem"
             }}
         >
             <Box
@@ -94,12 +103,13 @@ const ProductionSimulator: React.FC = () => {
                     p: 4,
                     borderRadius: 3,
                     boxShadow: 4,
-                    background: "#ffffffee",
-                    border: "2px solid #654321",
+                    backgroundColor: theme.boxBackground,
+                    border: `2px solid ${theme.borderColor}`,
                     backdropFilter: "blur(6px)",
+                    color: theme.textColor,
                 }}
             >
-                <Typography variant="h5" fontWeight="bold" sx={{ mb: 3, color: "black" }}>
+                <Typography variant="h5" fontWeight="bold" sx={{ mb: 3 }}>
                     Simulate Production
                 </Typography>
 
@@ -108,6 +118,7 @@ const ProductionSimulator: React.FC = () => {
                     <Select
                         value={selectedProduct || ""}
                         onChange={(e) => setSelectedProduct(Number(e.target.value))}
+                        sx={{ color: theme.textColor }}
                     >
                         {products.map((product) => (
                             <MenuItem key={product.id} value={product.id}>
@@ -123,7 +134,11 @@ const ProductionSimulator: React.FC = () => {
                     type="number"
                     value={quantity}
                     onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-                    sx={{ mb: 2 }}
+                    sx={{
+                        mb: 2,
+                        input: { color: theme.textColor },
+                        label: { color: theme.textColor },
+                    }}
                 />
 
                 <Button
@@ -131,7 +146,7 @@ const ProductionSimulator: React.FC = () => {
                     fullWidth
                     onClick={handleSimulateProduction}
                     sx={{
-                        background: "linear-gradient(to right,rgb(172, 135, 79),rgb(149, 106, 33))",
+                        background: "linear-gradient(to right, rgb(172, 135, 79), rgb(149, 106, 33))",
                         color: "#fff",
                         fontWeight: "bold",
                         "&:hover": {
@@ -148,7 +163,9 @@ const ProductionSimulator: React.FC = () => {
                         sx={{
                             mt: 2,
                             fontWeight: "bold",
-                            color: resultMessage.includes("Error") ? "red" : "green",
+                            color: resultMessage.includes("Error")
+                                ? theme.resultError
+                                : theme.resultSuccess,
                         }}
                     >
                         {resultMessage}
