@@ -8,6 +8,8 @@ import { ErrorScreen, LoadingScreen } from "../../utils/LoadingAndError";
 import { getUserData } from "../../utils/getUserData";
 import { deleteProduct, fetchProducts as fetchProductsAPI } from "../../utils/fetches/ProductService";
 import DeleteProductModal from "./DeleteProductModal";
+import { useThemeMode } from "../../context/ThemeContext";
+import { light, dark } from "./theme";
 
 interface Product {
   id: number;
@@ -30,6 +32,9 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [productToDelete, setProductToDelete] = useState<{ id: number; name: string } | null>(null);
+
+  const { isDark } = useThemeMode();
+  const theme = isDark ? dark : light;
 
 
   const userData = getUserData();
@@ -91,17 +96,17 @@ const Product = () => {
       margin: "0 auto",
       border: "1px solid #ccc",
       borderRadius: "8px",
-      background: `#FFF8F3`,
+      background: theme.pageBackground,
       width: "99.8%",
-      height: "calc(99vh - 4rem)",
+      height: "calc(100vh - 4rem)",
       overflowY: "scroll",
       position: "relative",
       "&::-webkit-scrollbar": { display: "none" },
       mt: "4rem"
     }}>
-      <AppBar position="sticky" sx={{ width: "100%", backgroundColor: "#FBEEDB", borderRadius: "5px" }}>
+      <AppBar position="sticky" sx={{ width: "100%", backgroundColor: theme.appBarBackground, borderRadius: "5px" }}>
         <Toolbar>
-          <IconButton sx={{ color: "black", fontWeight: "medium" }} onClick={() => setDrawerOpen(true)}>
+          <IconButton sx={{ color: theme.optionButtonText, fontWeight: "medium" }} onClick={() => setDrawerOpen(true)}>
             Options <ArrowRightIcon />
           </IconButton>
         </Toolbar>
@@ -114,10 +119,10 @@ const Product = () => {
         sx={{
           "& .MuiDrawer-paper": {
             width: "60vh",
-            borderTop: "5px solid #B69E88",
-          backgroundColor: "#FFF8F3",
+            borderTop: `5px solid ${theme.drawerBorder}`,
+            backgroundColor: theme.drawerBackground,
           },
-          
+
         }}>
         <List>
           <ListItem>
