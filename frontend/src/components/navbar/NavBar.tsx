@@ -12,13 +12,13 @@ import WarehouseIcon from "@mui/icons-material/Warehouse";
 import InventoryIcon from "@mui/icons-material/Inventory2";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import DarkModeIcon from "@mui/icons-material/DarkMode";   // 🌙
-import LightModeIcon from "@mui/icons-material/LightMode"; // ☀️
-import { useThemeMode } from "../../context/ThemeContext"; // 🌗 custom context
+import DarkModeIcon from "@mui/icons-material/DarkMode";   
+import LightModeIcon from "@mui/icons-material/LightMode"; 
+import { useThemeMode } from "../../context/ThemeContext"; 
 
 const NavBar = () => {
   const navigate = useNavigate();
-  const { isDark, toggleTheme } = useThemeMode(); // 👈 Theme hook
+  const { isDark, toggleTheme } = useThemeMode(); 
 
   const handleLogout = () => {
     localStorage.removeItem("jwt-response");
@@ -29,13 +29,12 @@ const NavBar = () => {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "#1B1B1B", // 🔒 Navbar színe nem változik
+        backgroundColor: "#1B1B1B", 
         boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
         zIndex: 1200,
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* Navigációs gombok bal oldalt */}
         <Box sx={{ display: "flex", gap: 4 }}>
           <Tooltip title="Home">
             <Button
@@ -98,16 +97,13 @@ const NavBar = () => {
           </Tooltip>
         </Box>
 
-        {/* Jobb oldali gombok: téma és logout */}
         <Box sx={{ display: "flex", gap: 2 }}>
-          {/* 🌗 Téma váltó gomb */}
           <Tooltip title="Toggle Theme">
             <IconButton onClick={toggleTheme} sx={{ color: "#f6f202" }}>
               {isDark ? <LightModeIcon /> : <DarkModeIcon />}
             </IconButton>
           </Tooltip>
 
-          {/* 🚪 Kijelentkezés gomb */}
           <Tooltip title="Logout">
             <IconButton onClick={handleLogout} sx={{ color: "#f6f202" }}>
               <LogoutIcon />

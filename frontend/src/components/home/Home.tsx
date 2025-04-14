@@ -93,7 +93,7 @@ const Home = () => {
             }
           ].map((service, i) => (
             <Grid item xs={12} sm={6} md={3} key={i}>
-              <Card sx={{ height: "100%" }}>
+              <Card sx={{ height: "100%", backgroundColor: theme.section2Background }}>
                 <CardMedia
                   component="img"
                   height="180"
