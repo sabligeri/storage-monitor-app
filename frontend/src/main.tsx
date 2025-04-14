@@ -4,13 +4,14 @@ import './index.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Home from './components/Home';
-import App from './App'; 
-import PrivateRoute from './components/PrivateRoute'; 
+import Home from './components/home/Home';
+import App from './App';
+import PrivateRoute from './components/PrivateRoute';
 import StorageList from './components/storagelist/StorageList';
 import Storage from './components/storage/Storage';
 import Prodct from './components/product/Product';
 import ProductionSimulator from './components/production/ProductionSimulator';
+import { ThemeProvider } from './context/ThemeContext';
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
