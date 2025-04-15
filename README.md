@@ -53,7 +53,7 @@ To run the full application stack using Docker:
    ```sh
    docker compose up --build
    ```
-- Frontend will be available at: **http://localhost:5173**  
+- Frontend will be available at: **http://localhost:3000**  
 - Backend will be available at: **http://localhost:8080**
 
 ---
