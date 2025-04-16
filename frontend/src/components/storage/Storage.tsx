@@ -12,9 +12,9 @@ import {
   Divider,
   Box,
 } from "@mui/material";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import AddIcon from "@mui/icons-material/Add";
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import ItemCreatorModal from "./ItemCreatorModal";
+import AddIcon from '@mui/icons-material/Add';
 import ItemTypeCreatorModal from "./ItemTypeCreatorModal";
 import ItemCard from "./ItemCard";
 import { LoadingScreen, ErrorScreen } from "../../utils/LoadingAndError";
@@ -28,8 +28,10 @@ import {
   refillItem,
   deleteItem,
 } from "../../utils/fetches/ItemService";
-import { light, dark } from "./theme";
 import { useThemeMode } from "../../context/ThemeContext";
+import { light, dark } from "./theme";
+
+
 
 interface Item {
   id: number;
@@ -45,15 +47,12 @@ interface ItemType {
 }
 
 const Storage = () => {
-  const { isDark } = useThemeMode();
-  const theme = isDark ? dark : light;
-
   const { storageId } = useParams<{ storageId: string }>();
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>([])
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [itemTypes, setItemTypes] = useState<ItemType[]>([]);
-  const [quantityTypes, setQuantityTypes] = useState<string[]>([]);
+  const [quantityTypes, setQuantityTypes] = useState<string[]>([])
   const [newItemTypeName, setNewItemTypeName] = useState<string>("");
 
   const [newItemName, setNewItemName] = useState<string>("");
@@ -68,6 +67,9 @@ const Storage = () => {
   const userData = getUserData();
   const userId = userData?.id;
   const jwtToken = userData?.jwt;
+
+  const { isDark } = useThemeMode();
+  const theme = isDark ? dark : light;
 
   const fetchItems = async () => {
     if (!storageId || !jwtToken) return;
@@ -159,14 +161,25 @@ const Storage = () => {
     fetchAll();
   }, [userId, jwtToken]);
 
-  if (loading) return <LoadingScreen />;
-  if (error) return <ErrorScreen error={error} />;
+
+  if (loading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorScreen error={error} />
+    );
+  }
+
 
   return (
     <Box
       sx={{
         margin: "0 auto",
-        border: `1px solid ${theme.drawerBorder}`,
+        border: "1px solid #ccc",
         background: theme.background,
         width: "100%",
         height: "calc(100vh - 4rem)",
@@ -176,13 +189,14 @@ const Storage = () => {
         mt: "4rem",
       }}
     >
-      <AppBar position="sticky" sx={{ width: "100%", backgroundColor: theme.drawerBorder }}>
+      <AppBar position="sticky" sx={{ width: "100%", backgroundColor: theme.drawerBorder, borderRadius: "5px" }}>
         <Toolbar>
           <IconButton
-            sx={{ color: theme.cardText }}
+            sx={{ color: theme.cardText, fontWeight: "medium" }}
             onClick={() => setDrawerOpen(true)}
           >
-            Options <ArrowRightIcon />
+            Options
+            <ArrowRightIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -198,12 +212,11 @@ const Storage = () => {
             backgroundColor: theme.drawerBackground,
             paddingTop: 2,
           }
-        }}
-      >
+        }}>
         <List>
-          <ListItem>
+          <ListItem >
             <ListItemButton onClick={() => { setOpenCreateItem(true); setDrawerOpen(false); }}>
-              <ListItemText primary="Create Item" />
+              <ListItemText sx={{ fontWeight: "bold" }} primary="Create Item" />
               <AddIcon />
             </ListItemButton>
           </ListItem>
@@ -234,13 +247,14 @@ const Storage = () => {
       />
 
       <ItemTypeCreatorModal
-        open={openCreateItemType}
-        handleClose={() => setOpenCreateItemType(false)}
-        newItemTypeName={newItemTypeName}
-        setNewItemTypeName={setNewItemTypeName}
-        handleCreateItemType={handleCreateItemType}
+        {...{
+          open: openCreateItemType,
+          handleClose: () => setOpenCreateItemType(false),
+          newItemTypeName,
+          setNewItemTypeName,
+          handleCreateItemType
+        }}
       />
-
       <Box
         sx={{
           display: "grid",
@@ -268,7 +282,7 @@ const Storage = () => {
         ))}
       </Box>
     </Box>
-  );
-};
+  )
+}
 
 export default Storage;

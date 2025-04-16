@@ -142,7 +142,7 @@ const StorageList = () => {
         sx={{
           p: 3,
           backgroundColor: theme.paperBackground,
-          maxHeight: "68vh",
+          height: "70vh",
           overflowY: "auto",
         }}
       >
