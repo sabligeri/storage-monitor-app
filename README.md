@@ -80,6 +80,38 @@ npm run dev
 ```
 
 ---
+## 📸 Screenshots
+
+<p align="center">
+  <a href="./assets/Képernyőkép 2025-04-15 100412.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-15 100412.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-15 100509.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-15 100509.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-15 100555.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-15 100555.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-15 101232.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-15 101232.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-16 104425.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-16 104425.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-16 104531.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-16 104531.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-16 104634.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-16 104634.png" width="250"/>
+  </a>
+  <a href="./assets/Képernyőkép 2025-04-16 104733.png" target="_blank">
+    <img src="./assets/Képernyőkép 2025-04-16 104733.png" width="250"/>
+  </a>
+</p>
+
+
+
+---
 
 ## 🔑 Authentication & Security
 The backend uses **JWT tokens**.  
