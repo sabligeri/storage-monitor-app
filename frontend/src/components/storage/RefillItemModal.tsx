@@ -15,8 +15,18 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({
   handleRefill,
 }) => {
   const [quantity, setQuantity] = useState<number>(0);
+  const [error, setError] = useState<string>("");
   const { isDark } = useThemeMode();
   const theme = isDark ? dark : light;
+
+  const validateAndSubmit = () => {
+    if (quantity <= 0) {
+      setError("Quantity must be greater than 0.");
+      return;
+    }
+    setError("");
+    handleRefill(quantity);
+  };
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -44,7 +54,12 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({
           type="number"
           label="Quantity"
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => {
+            setQuantity(Number(e.target.value));
+            if (error) setError(""); // törli az errort, ha javítják
+          }}
+          error={!!error}
+          helperText={error}
           InputLabelProps={{ style: { color: theme.cardText } }}
           InputProps={{ style: { color: theme.cardText } }}
         />
@@ -61,7 +76,7 @@ const RefillItemModal: React.FC<RefillItemModalProps> = ({
                 color: theme.buttonText,
               },
             }}
-            onClick={() => handleRefill(quantity)}
+            onClick={validateAndSubmit}
           >
             Confirm
           </Button>

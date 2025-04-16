@@ -8,15 +8,38 @@ import {
   Typography,
   Link,
 } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { InputAdornment, IconButton } from "@mui/material";
+
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setErrorr] = useState('');
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleRegistration = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const isLongEnough = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+
+    if (!isLongEnough || !hasUppercase || !hasNumber) {
+      let errorMsg = '';
+      if (!isLongEnough) errorMsg += 'Password must be at least 8 characters long. ';
+      if (!hasUppercase) errorMsg += 'Password must include at least one uppercase letter. ';
+      if (!hasNumber) errorMsg += 'Password must include at least one number. ';
+      if (errorMsg) {
+        setErrorr(errorMsg);
+        return;
+      }
+
+    }
+
+
     try {
       await registerUser({ username, password });
       navigate('/login');
@@ -61,13 +84,26 @@ const Register = () => {
             />
             <TextField
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               variant="outlined"
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               sx={{ mb: 2 }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             {error && <Typography color="error">{error}</Typography>}
             <Button type="submit" variant="contained" color="primary" fullWidth>

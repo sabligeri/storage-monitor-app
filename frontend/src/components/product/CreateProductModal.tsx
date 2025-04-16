@@ -47,6 +47,12 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
   const [selectedStorage, setSelectedStorage] = useState<number | null>(null);
   const [storageList, setStorageList] = useState<Storage[]>([]);
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
+  const [formErrors, setFormErrors] = useState({
+    productName: '',
+    selectedStorage: '',
+    selectedItems: '',
+  });
+
 
   const userData = getUserData();
   const userId = userData?.id;
@@ -72,8 +78,19 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
   }, [open, userId, jwtToken]);
 
   const handleCreateProduct = async () => {
-    if (!productName || !selectedStorage || selectedItems.length === 0 || !userId || !jwtToken)
-      return;
+
+    if (!userId || !jwtToken) return
+
+    const newErrors = {
+      productName: productName ? '' : 'Product name is required.',
+      selectedStorage: selectedStorage ? '' : 'Storage must be selected.',
+      selectedItems: selectedItems.length > 0 ? '' : 'At least one item must be selected.',
+    };
+
+    setFormErrors(newErrors);
+
+    if (Object.values(newErrors).some((msg) => msg)) return;
+
 
     try {
       await createProduct(
@@ -120,11 +137,14 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
           sx={{ mb: 2 }}
+          error={!!formErrors.productName}
+          helperText={formErrors.productName}
           InputLabelProps={{ style: { color: theme.cardText } }}
           InputProps={{ style: { color: theme.cardText } }}
         />
 
-        <FormControl fullWidth sx={{ mb: 2 }}>
+
+        <FormControl fullWidth sx={{ mb: 2 }} error={!!formErrors.selectedStorage}>
           <InputLabel>Select Storage</InputLabel>
           <Select
             value={selectedStorage || ""}
@@ -136,7 +156,13 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
               </MenuItem>
             ))}
           </Select>
+          {formErrors.selectedStorage && (
+            <Typography variant="caption" color="error" sx={{ ml: 2 }}>
+              {formErrors.selectedStorage}
+            </Typography>
+          )}
         </FormControl>
+
 
         {selectedStorage && (
           <Autocomplete
@@ -152,9 +178,17 @@ const CreateProductModal: React.FC<CreateProductModalProps> = ({
                 }))
               );
             }}
-            renderInput={(params) => <TextField {...params} label="Select Items" />}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Select Items"
+                error={!!formErrors.selectedItems}
+                helperText={formErrors.selectedItems}
+              />
+            )}
           />
         )}
+
 
         {selectedItems.length > 0 && (
           <Box sx={{ mt: 2 }}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   Box,
@@ -29,6 +29,17 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
   const { isDark } = useThemeMode();
   const theme = isDark ? dark : light;
 
+  const [formError, setFormError] = useState("");
+
+  const validateAndSubmit = () => {
+    if (!newItemTypeName.trim()) {
+      setFormError("Item type name is required.");
+      return;
+    }
+    setFormError("");
+    handleCreateItemType();
+  };
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -54,13 +65,18 @@ const ItemTypeCreatorModal: React.FC<ItemTypeCreatorProps> = ({
           fullWidth
           label="Item Type Name"
           value={newItemTypeName}
-          onChange={(e) => setNewItemTypeName(e.target.value)}
+          onChange={(e) => {
+            setNewItemTypeName(e.target.value);
+            if (formError) setFormError(""); // töröljük ha újra ír
+          }}
+          error={!!formError}
+          helperText={formError}
           InputLabelProps={{ style: { color: theme.cardText } }}
           InputProps={{ style: { color: theme.cardText } }}
         />
         <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 3 }}>
           <Button
-            onClick={handleCreateItemType}
+            onClick={validateAndSubmit}
             variant="contained"
             sx={{
               backgroundColor: theme.buttonBackground,
