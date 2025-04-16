@@ -27,6 +27,11 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build and run tests with Maven
+      - name: Build and run tests with Maven (backend)
+        working-directory: ./backend
         run: mvn verify --batch-mode
 
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@v4
+        with:
+          directory: backend
