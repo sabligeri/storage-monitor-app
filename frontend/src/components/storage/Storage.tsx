@@ -109,7 +109,7 @@ const Storage = () => {
   };
 
   const handleCreateItem = async () => {
-    if (!newItemName.trim() || newItemTypeId <= 0 || !newItemQuantityType.trim() || newItemQuantity < 0 || !storageId || !jwtToken) return;
+    if (!storageId || !jwtToken) return;
 
     try {
       await createItem(newItemName, newItemQuantity, newItemQuantityType, storageId, newItemTypeId, jwtToken);
