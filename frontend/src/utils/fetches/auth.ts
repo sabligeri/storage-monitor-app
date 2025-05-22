@@ -42,7 +42,6 @@ export const registerUser = async (credentials: UserCredentials): Promise<AuthRe
     const data = await response.json();
 
     if (response.ok) {
-        localStorage.setItem('jwt-response', JSON.stringify(data));
         return data;
     } else {
         const errorMessage = data?.message || 'Registration failed';
