@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { ThemeProvider as MuiThemeProvider, CssBaseline, createTheme } from "@mui/material";
 
 // Ez csak alapérték, hogy a MUI ne boruljon fel
@@ -27,6 +27,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const toggleTheme = () => setIsDark((prev) => !prev);
 
   const theme = useMemo(() => (isDark ? muiDarkTheme : muiLightTheme), [isDark]);
+
+  
+useEffect(() => {
+  document.body.setAttribute("data-theme", isDark ? "dark" : "light");
+}, [isDark]);
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
